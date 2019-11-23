@@ -38,6 +38,22 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('history') }}">History</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('about') }}">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('how') }}">How</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('results') }}">Results</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('candidates') }}">Candidates</a>
+                        </li>
+
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
