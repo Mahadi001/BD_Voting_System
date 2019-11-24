@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBirthCertificatesTable extends Migration
+class CreateCorrectionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateBirthCertificatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('birth_certificates', function (Blueprint $table) {
+        Schema::create('corrections', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('birthCertificate_id')->unique();
             $table->string('fname');
             $table->string('mname');
             $table->string('lname');
@@ -47,6 +46,6 @@ class CreateBirthCertificatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('birth_certificates');
+        Schema::dropIfExists('corrections');
     }
 }

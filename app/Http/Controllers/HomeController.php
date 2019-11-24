@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\BirthCertificate;
+
 
 class HomeController extends Controller
 {
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('user.dashboard');
+        $certificates = BirthCertificate::all();
+        return view('user.dashboard')->with('certificates', $certificates);
     }
+
 }
