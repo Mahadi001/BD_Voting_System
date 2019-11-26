@@ -18,7 +18,12 @@
 Auth::routes();
 
 Route::resource('certificate', 'CertificateController');
+
 Route::resource('correction', 'CorrectionController');
+
+Route::resource('vote', 'VoteController');
+
+Route::resource('candidate', 'CandidateController');
 
 Route::get('/home', 'HomeController@index')->name('user');
 Route::get('/', 'PagesController@index')->name('home');

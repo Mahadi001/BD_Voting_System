@@ -15,7 +15,7 @@ class CreateBirthCertificatesTable extends Migration
     {
         Schema::create('birth_certificates', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('birthCertificate_id')->unique();
+            // $table->bigInteger('birthCertificate_id')->unique();
             $table->string('fname');
             $table->string('mname');
             $table->string('lname');

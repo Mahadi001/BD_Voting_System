@@ -1,0 +1,48 @@
+division
+district
+sub district
+polli ba gram and city corporation
+
+
+perlament seat
+---------------------------
+1 = dhaka 1
+2 = dhaka 2
+3 = dhaka 3
+
+perlament seat thana
+---------------------------------
+1 = 3
+3 = 2
+2 = 1
+
+
+thana
+-----------
+1 = jatrabari
+2 = gulistan
+3 = gulsun
+
+ward
+----------
+1= ward 1
+2=ward 2
+3=ward 3
+4=ward 4
+
+city
+----------
+1= dhaka south
+2= dhaka north
+
+city_thana_ward
+------------------------
+1= dhaka south | 1 = jatrabari | 2=ward 2
+1= dhaka south | 1 = jatrabari | 3=ward 3
+
+
+user
+--------------
+thanaa 	| ward 	| union      	| rmo
+2      	| 3    	| -    	   	| city
+2	| null	| union_id 	| polli

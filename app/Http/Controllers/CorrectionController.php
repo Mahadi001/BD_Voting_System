@@ -14,10 +14,10 @@ class CorrectionController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +25,9 @@ class CorrectionController extends Controller
      */
     public function index()
     {
- 
+
+        $corrections = BirthCertificate::all();
+        return view('voter.correction.lists')->with('corrections', $corrections);
     }
 
     /**
@@ -57,8 +59,8 @@ class CorrectionController extends Controller
      */
     public function show($id)
     {
-        $certificate = BirthCertificate::find($id);
-        return view('admin.certificate.show')->with('certificate', $certificate);
+        // $certificate = BirthCertificate::find($id);
+        // return view('admin.certificate.show')->with('certificate', $certificate);
     }
 
     /**
