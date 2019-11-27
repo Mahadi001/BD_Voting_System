@@ -40,3 +40,10 @@ Route::prefix('admin')->group(function(){
     Route::get('/', 'AdminController@index')->name('admin.dashboard');
     Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
 });
+
+Route::prefix('subAdmin')->group(function(){
+    Route::get('/login', 'Auth\SubAdminLoginController@showLoginForm')->name('subAdmin.login');
+    Route::post('/login', 'Auth\SubAdminLoginController@login')->name('subAdmin.login.submit');
+    Route::get('/', 'SubAdminController@index')->name('subAdmin.dashboard');
+    Route::get('/logout', 'Auth\SubAdminLoginController@logout')->name('subAdmin.logout');
+});

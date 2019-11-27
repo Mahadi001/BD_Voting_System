@@ -15,7 +15,7 @@
                 </div>
             </div>
             <a href="{{ route('vote.index') }}" class="list-group-item list-group-item-action bg-light">Create Vote</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">Candidate Approval</a>
+            <a href="{{ route('candidate.index') }}" class="list-group-item list-group-item-action bg-light">Candidate Approval</a>
             <a href="{{ route('correction.index') }}" class="list-group-item list-group-item-action bg-light">Correction Application</a>
             <a href="#" class="list-group-item list-group-item-action bg-light"></a>
 

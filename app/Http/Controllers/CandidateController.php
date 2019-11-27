@@ -16,7 +16,8 @@ class CandidateController extends Controller
     public function index()
     {
         $political_parties = Political_Parties::all();
-        return view('admin.candidate.index')->with('political_parties', $political_parties);
+        $candidates = BirthCertificate::all();
+        return view('admin.candidate.lists')->with('political_parties', 'candidates', $political_parties, $candidates);
     }
 
     /**

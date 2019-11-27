@@ -57,6 +57,17 @@ return [
             'provider' => 'admins',
             'hash' => false,
         ],
+
+        'subAdmin' => [
+            'driver' => 'session',
+            'provider' => 'subAdmins',
+        ],
+
+        'subAdmin-api' => [
+            'driver' => 'token',
+            'provider' => 'subAdmins',
+            'hash' => false,
+        ],
     ],
 
     /*
@@ -87,6 +98,11 @@ return [
             'model' => App\Admin::class,
         ],
 
+        'subAdmins' => [
+            'driver' => 'eloquent',
+            'model' => App\SubAdmin::class,
+        ],
+
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -111,6 +127,18 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'admins' => [
+            'provider' => 'admins',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'subAdmins' => [
+            'provider' => 'subAdmins',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
