@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2019 at 07:31 PM
+-- Generation Time: Nov 27, 2019 at 08:03 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -45,7 +45,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `name`, `email`, `job_title`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin@mail.com', 'SubAdmin', NULL, '$2y$10$f8foBPeFsWRA.DeJKYpmXOfPNTyWcPujBrXQmpG.E6No1a9L8PNuq', NULL, '2019-11-19 07:00:23', '2019-11-19 07:00:23');
+(1, 'Admin', 'admin@mail.com', 'Admin', NULL, '$2y$10$f8foBPeFsWRA.DeJKYpmXOfPNTyWcPujBrXQmpG.E6No1a9L8PNuq', NULL, '2019-11-19 07:00:23', '2019-11-19 07:00:23');
 
 -- --------------------------------------------------------
 
@@ -97,6 +97,22 @@ INSERT INTO `birth_certificates` (`id`, `bid`, `fname`, `mname`, `lname`, `birth
 
 CREATE TABLE `candidates` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contituencies_details`
+--
+
+CREATE TABLE `contituencies_details` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `division_id` int(11) NOT NULL,
+  `district_id` int(11) NOT NULL,
+  `thana_id` int(11) NOT NULL,
+  `constituenceies_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -161,30 +177,10 @@ CREATE TABLE `districts` (
 --
 
 INSERT INTO `districts` (`id`, `did`, `name`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 3, 'Dhaka District	', NULL, NULL, NULL),
-(2, 3, 'Faridpur District', NULL, NULL, NULL),
-(3, 3, 'Gazipur District', NULL, NULL, NULL),
-(4, 3, 'Gopalganj District', NULL, NULL, NULL),
-(5, 3, 'Kishoreganj District', NULL, NULL, NULL),
-(6, 3, 'Madaripur District', NULL, NULL, NULL),
-(7, 3, 'Manikganj District', NULL, NULL, NULL),
-(8, 3, 'Munshiganj District', NULL, NULL, NULL),
-(9, 3, 'Narayanganj District', NULL, NULL, NULL),
-(10, 3, 'Narsingdi District', NULL, NULL, NULL),
-(11, 3, 'Rajbari District', NULL, NULL, NULL),
-(12, 3, 'Shariatpur District', NULL, NULL, NULL),
-(13, 3, 'Tangail District', NULL, NULL, NULL),
-(14, 4, 'Bagerhat District', NULL, NULL, NULL),
-(15, 4, 'Chuadanga District', NULL, NULL, NULL),
-(16, 4, 'Jessore District', NULL, NULL, NULL),
-(17, 4, 'Jhenaidah District', NULL, NULL, NULL),
-(18, 4, 'Khulna District', NULL, NULL, NULL),
-(19, 4, 'Kushtia District', NULL, NULL, NULL),
-(20, 4, 'Magura District', NULL, NULL, NULL),
-(21, 4, 'Meherpur District', NULL, NULL, NULL),
-(22, 4, 'Narail District', NULL, NULL, NULL),
-(23, 4, 'Satkhira District', NULL, NULL, NULL),
-(26, 3, 'Tangail District', NULL, NULL, NULL);
+(1, 3, 'Dhaka 	', NULL, NULL, NULL),
+(9, 3, 'Narayanganj ', NULL, NULL, NULL),
+(12, 4, 'Bagerhat ', NULL, NULL, NULL),
+(13, 4, 'Satkhira', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -205,14 +201,8 @@ CREATE TABLE `divisions` (
 --
 
 INSERT INTO `divisions` (`id`, `name`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Barisal Division', NULL, NULL, NULL),
-(2, 'Chittagong Division', NULL, NULL, NULL),
 (3, 'Dhaka Division', NULL, NULL, NULL),
-(4, 'Khulna Division', NULL, NULL, NULL),
-(5, 'Mymensingh Division', NULL, NULL, NULL),
-(6, 'Rajshahi Division', NULL, NULL, NULL),
-(7, 'Rangpur Division', NULL, NULL, NULL),
-(8, 'Sylhet Division', NULL, NULL, NULL);
+(4, 'Khulna Division', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -282,7 +272,29 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (13, '2019_11_26_144727_create_divisions_table', 7),
 (14, '2019_11_26_145254_create_districts_table', 8),
 (15, '2019_11_26_151723_create_election_types_table', 9),
-(16, '2019_11_26_153055_create_positions_table', 10);
+(16, '2019_11_26_153055_create_positions_table', 10),
+(17, '2019_11_26_190134_create_subadmins_table', 11),
+(19, '2019_11_27_021838_create_sub_admins_table', 12),
+(20, '2019_11_27_050050_create_upazillas_table', 12),
+(21, '2019_11_27_050546_create_thana__upazillas_table', 13),
+(22, '2019_11_27_052849_create_wards_table', 14),
+(23, '2019_11_27_052908_create_unions_table', 14),
+(24, '2019_11_27_052947_create_parliamentary__constituencies_table', 14),
+(25, '2019_11_27_060223_create_contituencies_details_table', 14),
+(28, '2019_11_27_161931_create_pendings_table', 15);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `parliamentary__constituencies`
+--
+
+CREATE TABLE `parliamentary__constituencies` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -295,6 +307,46 @@ CREATE TABLE `password_resets` (
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pendings`
+--
+
+CREATE TABLE `pendings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `birthCertificate_id` bigint(20) DEFAULT NULL,
+  `fname` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mname` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lname` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `birthPlace` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `birthCountry` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dateOfBirth` date NOT NULL,
+  `fathername` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mothername` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `height` double NOT NULL,
+  `eyesColor` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sex` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telephone` double NOT NULL,
+  `mobile` double NOT NULL,
+  `emergencyContact` double NOT NULL,
+  `address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address2` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `state` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `zip` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `pendings`
+--
+
+INSERT INTO `pendings` (`id`, `birthCertificate_id`, `fname`, `mname`, `lname`, `birthPlace`, `birthCountry`, `dateOfBirth`, `fathername`, `mothername`, `height`, `eyesColor`, `sex`, `telephone`, `mobile`, `emergencyContact`, `address`, `address2`, `country`, `state`, `zip`, `remember_token`, `created_at`, `updated_at`) VALUES
+(2, NULL, 'firsttestname', 'mtest', 'ltest', 'dhaka', 'bangladesh', '1992-01-01', 'testfather', 'testmother', 192.2, 'blue', 'other', 101010101, 202020202, 303030303, '112/A dhaka', '112/A ctg', 'bd', 'd', '1219', NULL, '2019-11-27 12:51:23', '2019-11-27 12:51:23');
 
 -- --------------------------------------------------------
 
@@ -347,6 +399,77 @@ INSERT INTO `positions` (`id`, `name`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sub_admins`
+--
+
+CREATE TABLE `sub_admins` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `job_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sub_admins`
+--
+
+INSERT INTO `sub_admins` (`id`, `name`, `email`, `email_verified_at`, `job_title`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Awami League', 'awamileague@mail.com', NULL, 'Political Party', '$2y$10$2eMdnYwxelOSFHLYbFiFhOQMvgCSBNWR6Tr14vXp1zDXilvfsZkfa', NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `thana__upazillas`
+--
+
+CREATE TABLE `thana__upazillas` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `division_id` int(11) NOT NULL,
+  `district_id` int(11) NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `thana__upazillas`
+--
+
+INSERT INTO `thana__upazillas` (`id`, `division_id`, `district_id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 3, 1, 'Khilgaon', NULL, NULL),
+(2, 3, 1, 'Savar', NULL, NULL),
+(3, 3, 1, 'Keraniganj', NULL, NULL),
+(4, 3, 1, 'Jatrabari', NULL, NULL),
+(5, 3, 9, 'Shiddhirganj', NULL, NULL),
+(6, 3, 9, 'Narayanganj Sadar', NULL, NULL),
+(7, 3, 9, 'Rupganj', NULL, NULL),
+(8, 4, 12, 'Chitalmar', NULL, NULL),
+(9, 4, 13, 'Assasuni', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `unions`
+--
+
+CREATE TABLE `unions` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `division_id` int(11) NOT NULL,
+  `district_id` int(11) NOT NULL,
+  `thana_id` int(11) NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -389,6 +512,22 @@ CREATE TABLE `votes` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wards`
+--
+
+CREATE TABLE `wards` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `division_id` int(11) NOT NULL,
+  `district_id` int(11) NOT NULL,
+  `thana_id` int(11) NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -410,6 +549,12 @@ ALTER TABLE `birth_certificates`
 -- Indexes for table `candidates`
 --
 ALTER TABLE `candidates`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `contituencies_details`
+--
+ALTER TABLE `contituencies_details`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -449,10 +594,23 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `parliamentary__constituencies`
+--
+ALTER TABLE `parliamentary__constituencies`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
+
+--
+-- Indexes for table `pendings`
+--
+ALTER TABLE `pendings`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `pendings_birthcertificate_id_unique` (`birthCertificate_id`);
 
 --
 -- Indexes for table `political__parties`
@@ -467,6 +625,25 @@ ALTER TABLE `positions`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `sub_admins`
+--
+ALTER TABLE `sub_admins`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `sub_admins_email_unique` (`email`);
+
+--
+-- Indexes for table `thana__upazillas`
+--
+ALTER TABLE `thana__upazillas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `unions`
+--
+ALTER TABLE `unions`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -477,6 +654,12 @@ ALTER TABLE `users`
 -- Indexes for table `votes`
 --
 ALTER TABLE `votes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `wards`
+--
+ALTER TABLE `wards`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -499,6 +682,12 @@ ALTER TABLE `birth_certificates`
 -- AUTO_INCREMENT for table `candidates`
 --
 ALTER TABLE `candidates`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `contituencies_details`
+--
+ALTER TABLE `contituencies_details`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -535,7 +724,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- AUTO_INCREMENT for table `parliamentary__constituencies`
+--
+ALTER TABLE `parliamentary__constituencies`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pendings`
+--
+ALTER TABLE `pendings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `political__parties`
@@ -550,6 +751,24 @@ ALTER TABLE `positions`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `sub_admins`
+--
+ALTER TABLE `sub_admins`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `thana__upazillas`
+--
+ALTER TABLE `thana__upazillas`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `unions`
+--
+ALTER TABLE `unions`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
@@ -559,6 +778,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `votes`
 --
 ALTER TABLE `votes`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `wards`
+--
+ALTER TABLE `wards`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 

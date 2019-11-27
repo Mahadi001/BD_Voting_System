@@ -22,7 +22,7 @@
       <div class="row">
         <div class="col-md-6 mb-3">
             {{Form::label('division', 'Division')}}
-            {{Form::select('division', ['B' => 'Bangladesh'], null, ['class' => 'form-control', 'placeholder' => 'Choose'])}}
+            {{Form::select('division', $divisions, null, ['class' => 'form-control', 'placeholder' => 'Choose'])}}
         </div>
         <div class="col-md-6 mb-3">
             {{Form::label('district', 'District')}}
@@ -36,8 +36,8 @@
             {{Form::select('subdistrict', ['B' => 'Bangladesh'], null, ['class' => 'form-control', 'placeholder' => 'Choose'])}}
         </div>
         <div class="col-md-6 mb-3">
-            {{Form::label('district', 'District')}}
-            {{Form::select('district', ['D' => 'Dhaka'], null, ['class' => 'form-control', 'placeholder' => 'Choose'])}}
+            {{Form::label('subDistrict', 'Sub District')}}
+            {{Form::select('subDistrict', ['D' => 'Dhaka'], null, ['class' => 'form-control', 'placeholder' => 'Choose'])}}
         </div>
       </div>
 
@@ -50,7 +50,7 @@
         @if (count($political_parties) > 0)
             @foreach ($political_parties as $political_party)
               {{Form::radio('name', 'value')}}
-              {{Form::label('name', 'Name' )}}
+              {{Form::label('name', $political_party->name)}}
             @endforeach
         @else
           <p>no data found</p>

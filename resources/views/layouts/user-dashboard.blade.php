@@ -5,12 +5,10 @@
             <div class="d-flex" id="wrapper">
                 <div class="bg-light border-right" id="sidebar-wrapper">
                 <div class="list-group list-group-flush">
-                    <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+                    <a href="/correction/{{$corrections->id}}" class="list-group-item list-group-item-action bg-light">Dashboard</a>
                     <a href="#" class="list-group-item list-group-item-action bg-light">Vote</a>
-                    {{-- <a href="{{ route('candidate.index') }}" class="list-group-item list-group-item-action bg-light">Apply for Candidate</a>
-                    <a href="{{ route('certificate.index') }}" class="list-group-item list-group-item-action bg-light">Apply for Correction</a> --}}
                     <a href="{{ route('candidate.index') }}" class="list-group-item list-group-item-action bg-light">Apply for Candidate</a>
-                    <a href="{{ route('correction.index') }}" class="list-group-item list-group-item-action bg-light">Apply for Correction</a>
+                    <a href="/correction/{{$corrections->id}}/edit" class="list-group-item list-group-item-action bg-light">Apply for Correction</a>
                 </div>
                 </div>
                 <div id="page-content-wrapper">

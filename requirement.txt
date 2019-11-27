@@ -19,8 +19,8 @@ perlament seat thana
 
 thana
 -----------
-1 = jatrabari
-2 = gulistan
+1 = jatrabari | city
+2 = gulistan  | polli
 3 = gulsun
 
 ward
@@ -39,6 +39,7 @@ city_thana_ward
 ------------------------
 1= dhaka south | 1 = jatrabari | 2=ward 2
 1= dhaka south | 1 = jatrabari | 3=ward 3
+
 
 
 user

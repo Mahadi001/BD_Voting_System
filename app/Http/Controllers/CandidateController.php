@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\BirthCertificate;
 use App\Political_Parties;
+use App\Divisions;
 
 class CandidateController extends Controller
 {
@@ -15,9 +16,17 @@ class CandidateController extends Controller
      */
     public function index()
     {
+        $divisions = [];
+
+        $collection = Divisions::select('id','name')->get();
+
+        foreach($collection as $value){
+            $divisions[  $value->id  ] =  $value->name;
+        }
+
         $political_parties = Political_Parties::all();
         $candidates = BirthCertificate::all();
-        return view('admin.candidate.lists')->with('political_parties', 'candidates', $political_parties, $candidates);
+        return view('admin.candidate.index', compact('divisions','political_parties') );
     }
 
     /**

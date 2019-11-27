@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\BirthCertificate;
 
 class SubAdminController extends Controller
 {
@@ -24,7 +25,7 @@ class SubAdminController extends Controller
 
     public function index()
     {
-        return view('layouts.subadmin-dashboard');
+        return view('subAdmin.candidateApprove');
     }    
 
 }

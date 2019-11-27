@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\BirthCertificate;
 use App\Correction;
+use App\Pending;
 
 class CorrectionController extends Controller
 {
@@ -18,6 +19,7 @@ class CorrectionController extends Controller
     // {
     //     $this->middleware('auth');
     // }
+    
     /**
      * Display a listing of the resource.
      *
@@ -25,9 +27,15 @@ class CorrectionController extends Controller
      */
     public function index()
     {
+        $pending = Pending::where('birthcertificate_id',auth()->user()->bid)->first();
+        return view('voter.correction.lists', compact('pending'));
+    }
 
-        $corrections = BirthCertificate::all();
-        return view('voter.correction.lists')->with('corrections', $corrections);
+
+    public function approval()
+    {
+        $pending = Pending::where('birthcertificate_id',auth()->user()->bid)->first();
+        return view('voter.correction.lists', compact('pending'));
     }
 
     /**
@@ -48,7 +56,50 @@ class CorrectionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'fname' => 'required',
+            'mname' => 'required',
+            'lname' => 'required',
+            'birthPlace' => 'required',
+            'birthCountry' => 'required',
+            'dateOfBirth' => 'required',
+            'fathername' => 'required',
+            'mothername' => 'required',
+            'height' => 'required',
+            'eyesColor' => 'required',
+            'sex' => 'required',
+            'telephone' => 'required',
+            'mobile' => 'required',
+            'emergencyContact' => 'required',
+            'address' => 'required',
+            'address2' => 'required',
+            'country' => 'required',
+            'state' => 'required',
+            'zip' => 'required'
+        ]);
+
+        $pending = new Pending;
+        $pending->fname = $request->input('fname');
+        $pending->mname = $request->input('mname');
+        $pending->lname = $request->input('lname');
+        $pending->birthPlace = $request->input('birthPlace');
+        $pending->birthCountry = $request->input('birthCountry');
+        $pending->dateOfBirth = $request->input('dateOfBirth');
+        $pending->fathername = $request->input('fathername');
+        $pending->mothername = $request->input('mothername');
+        $pending->height = $request->input('height');
+        $pending->eyesColor = $request->input('eyesColor');
+        $pending->sex = $request->input('sex');
+        $pending->telephone = $request->input('telephone');
+        $pending->mobile = $request->input('mobile');
+        $pending->emergencyContact = $request->input('emergencyContact');
+        $pending->address = $request->input('address');
+        $pending->address2 = $request->input('address2');
+        $pending->country = $request->input('country');
+        $pending->state = $request->input('state');
+        $pending->zip = $request->input('zip');
+        $pending->save();
+        return redirect('/correction')->with('success', 'Update request is sent');
     }
 
     /**
@@ -59,8 +110,8 @@ class CorrectionController extends Controller
      */
     public function show($id)
     {
-        // $certificate = BirthCertificate::find($id);
-        // return view('admin.certificate.show')->with('certificate', $certificate);
+        $corrections = BirthCertificate::find($id);
+        return view('voter.correction.show', compact('corrections'));
     }
 
     /**
@@ -71,7 +122,8 @@ class CorrectionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $corrections = BirthCertificate::find($id);
+        return view('voter.correction.edit', compact('corrections'));
     }
 
     /**
@@ -126,7 +178,7 @@ class CorrectionController extends Controller
         $correction->state = $request->input('state');
         $correction->zip = $request->input('zip');
         $correction->save();
-        return redirect('/correction')->with('success', 'Form Submitted for Correction');
+        return redirect('/admin')->with('success', 'Correction Approved');
     }
 
     /**
@@ -137,6 +189,8 @@ class CorrectionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $certificate = Pending::find($id);
+        $certificate->delete();
+        return redirect('/admin')->with('success', 'Request Removed');
     }
 }

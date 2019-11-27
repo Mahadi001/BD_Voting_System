@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\BirthCertificate;
 use App\Political_Parties;
+use App\Correction;
 
 
 class HomeController extends Controller
@@ -26,9 +27,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // $certificate = BirthCertificate::where('bid',auth()->user()->bid )->first();
-        // $certificate = BirthCertificate::all();
-        return view('layouts.user-dashboard');
+        $corrections = BirthCertificate::where('bid',auth()->user()->bid )->first();
+        return view('layouts.user-dashboard', compact('corrections'));
     }
 
 }
