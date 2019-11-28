@@ -11,6 +11,11 @@
       <div class="row">
         <div class="col-md-12 order-md-1">
         {!! Form::open(['action' => 'CertificateController@store', 'method' => 'POST']) !!} 
+        <div class="mb-3">
+          {{Form::label('bid', 'Birth Certificate Id')}}
+          {{Form::text('bid', '', ['class' => 'form-control', 'placeholder' => 'Birth Certificate Id'])}}
+        </div>
+        <hr class="mb-4">
         <div class="row">
         <div class="col-md-4 mb-3">
           {{Form::label('fname', 'First Name')}}

@@ -25,6 +25,7 @@
                 </td>
                 </tr>
             {{-- @endforeach
+        @else <p>No Data Found</p>
         @endif --}}
         </tbody>
       </table>

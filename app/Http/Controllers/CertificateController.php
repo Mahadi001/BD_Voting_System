@@ -49,6 +49,7 @@ class CertificateController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            'bid' => 'required',
             'fname' => 'required',
             'mname' => 'required',
             'lname' => 'required',
@@ -71,6 +72,7 @@ class CertificateController extends Controller
         ]);
 
         $certificate = new BirthCertificate;
+        $certificate->bid = $request->input('bid');
         $certificate->fname = $request->input('fname');
         $certificate->mname = $request->input('mname');
         $certificate->lname = $request->input('lname');
@@ -128,6 +130,7 @@ class CertificateController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
+            'bid' => 'required',
             'fname' => 'required',
             'mname' => 'required',
             'lname' => 'required',
@@ -150,6 +153,7 @@ class CertificateController extends Controller
         ]);
 
         $certificate = BirthCertificate::find($id);
+        $certificate->bid = $request->input('bid');
         $certificate->fname = $request->input('fname');
         $certificate->mname = $request->input('mname');
         $certificate->lname = $request->input('lname');

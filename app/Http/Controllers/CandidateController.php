@@ -10,6 +10,15 @@ use App\Divisions;
 class CandidateController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -26,7 +35,7 @@ class CandidateController extends Controller
 
         $political_parties = Political_Parties::all();
         $candidates = BirthCertificate::all();
-        return view('admin.candidate.index', compact('divisions','political_parties') );
+        return view('admin.candidate.lists', compact('divisions','political_parties') );
     }
 
     /**

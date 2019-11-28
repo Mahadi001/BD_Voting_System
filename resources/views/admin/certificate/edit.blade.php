@@ -9,6 +9,11 @@
       <div class="row">
         <div class="col-md-12 order-md-1">
         {!! Form::open(['action' => ['CertificateController@update', $certificate->id], 'method' => 'POST']) !!} 
+        <div class="mb-3">
+          {{Form::label('bid', 'Birth Certificate Id')}}
+          {{Form::text('bid', $certificate->bid, ['class' => 'form-control', 'placeholder' => 'Birth Certificate Id'])}}
+        </div>
+        <hr class="mb-4">
         <div class="row">
         <div class="col-md-4 mb-3">
         {{Form::label('fname', 'First Name')}}
@@ -117,43 +122,5 @@
         </div>
       </div>
     </div>
-
-{{-- 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="../../assets/js/vendor/popper.min.js"></script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
-    <script src="../../assets/js/vendor/holder.min.js"></script>
-    
-    <script type="text/javascript">
-      $(function () {
-          $('#datetimepicker4').datetimepicker();
-      });
-  </script>
-    <script>
-      // Example starter JavaScript for disabling form submissions if there are invalid fields
-      (function() {
-        'use strict';
-
-        window.addEventListener('load', function() {
-          // Fetch all the forms we want to apply custom Bootstrap validation styles to
-          var forms = document.getElementsByClassName('needs-validation');
-
-          // Loop over them and prevent submission
-          var validation = Array.prototype.filter.call(forms, function(form) {
-            form.addEventListener('submit', function(event) {
-              if (form.checkValidity() === false) {
-                event.preventDefault();
-                event.stopPropagation();
-              }
-              form.classList.add('was-validated');
-            }, false);
-          });
-        }, false);
-      })();
-    </script> --}}
 @endsection
   

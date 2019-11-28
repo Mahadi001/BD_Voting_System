@@ -20,6 +20,7 @@ Auth::routes();
 Route::resource('certificate', 'CertificateController');
 
 Route::resource('correction', 'CorrectionController');
+Route::get('/correction/{correction}/view', 'CorrectionController@view')->name('user.view');
 
 Route::resource('vote', 'VoteController');
 

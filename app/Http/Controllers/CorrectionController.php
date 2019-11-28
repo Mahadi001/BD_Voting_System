@@ -15,10 +15,10 @@ class CorrectionController extends Controller
      *
      * @return void
      */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth:admin', ['except' => ['view', 'edit']]);
+    }
     
     /**
      * Display a listing of the resource.
@@ -27,15 +27,8 @@ class CorrectionController extends Controller
      */
     public function index()
     {
-        $pending = Pending::where('birthcertificate_id',auth()->user()->bid)->first();
-        return view('voter.correction.lists', compact('pending'));
-    }
-
-
-    public function approval()
-    {
-        $pending = Pending::where('birthcertificate_id',auth()->user()->bid)->first();
-        return view('voter.correction.lists', compact('pending'));
+        $pendings = Pending::get();
+        return view('voter.correction.admin-lists', compact('pendings'));
     }
 
     /**
@@ -43,9 +36,11 @@ class CorrectionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function view($id)
     {
-        //
+        $corrections = BirthCertificate::find($id);
+        $view = BirthCertificate::find($id);
+        return view('voter.correction.view', compact('view', 'corrections'));
     }
 
     /**
@@ -57,6 +52,7 @@ class CorrectionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            'bid' => 'required',
             'fname' => 'required',
             'mname' => 'required',
             'lname' => 'required',
@@ -79,6 +75,7 @@ class CorrectionController extends Controller
         ]);
 
         $pending = new Pending;
+        $pending->bid = $request->input('bid');
         $pending->fname = $request->input('fname');
         $pending->mname = $request->input('mname');
         $pending->lname = $request->input('lname');
@@ -99,7 +96,7 @@ class CorrectionController extends Controller
         $pending->state = $request->input('state');
         $pending->zip = $request->input('zip');
         $pending->save();
-        return redirect('/correction')->with('success', 'Update request is sent');
+        return redirect('/home')->with('success', 'Update request is sent');
     }
 
     /**
@@ -110,8 +107,8 @@ class CorrectionController extends Controller
      */
     public function show($id)
     {
-        $corrections = BirthCertificate::find($id);
-        return view('voter.correction.show', compact('corrections'));
+        $pending = Pending::find($id);
+        return view('voter.correction.admin-show', compact('pending'));
     }
 
     /**
@@ -126,6 +123,7 @@ class CorrectionController extends Controller
         return view('voter.correction.edit', compact('corrections'));
     }
 
+
     /**
      * Update the specified resource in storage.
      *
@@ -136,6 +134,7 @@ class CorrectionController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
+            'bid' => 'required',
             'fname' => 'required',
             'mname' => 'required',
             'lname' => 'required',
@@ -158,6 +157,7 @@ class CorrectionController extends Controller
         ]);
 
         $correction = BirthCertificate::find($id);
+        $correction->bid = $request->input('bid');
         $correction->fname = $request->input('fname');
         $correction->mname = $request->input('mname');
         $correction->lname = $request->input('lname');
@@ -178,7 +178,7 @@ class CorrectionController extends Controller
         $correction->state = $request->input('state');
         $correction->zip = $request->input('zip');
         $correction->save();
-        return redirect('/admin')->with('success', 'Correction Approved');
+        return redirect('/correction')->with('success', 'Correction Approved');
     }
 
     /**
@@ -189,8 +189,8 @@ class CorrectionController extends Controller
      */
     public function destroy($id)
     {
-        $certificate = Pending::find($id);
-        $certificate->delete();
-        return redirect('/admin')->with('success', 'Request Removed');
+        $pending = Pending::find($id);
+        $pending->delete();
+        return redirect('/correction')->with('success', 'Request Removed');
     }
 }

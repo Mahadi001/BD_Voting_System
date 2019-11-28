@@ -11,20 +11,21 @@
           </tr>
         </thead>
         <tbody>
+          @foreach ($pendings as $pending)
                 <tr>
-                    <th scope="row">{{$corrections->id}}</th>
-                    <td>{{$corrections->bid}}</td>
-                    <td>{{$corrections->fname}}</td>
-                    <td>{{$corrections->lname}}</td>
+                    <th scope="row">{{$pending->id}}</th>
+                    <td>{{$pending->bid}}</td>
+                    <td>{{$pending->fname}}</td>
+                    <td>{{$pending->lname}}</td>
                 <td>
-                  <a class="btn btn-primary" href="/correction/{{$corrections->id}}" role="button">View</a>
-                  <a class="btn btn-success" href="/correction/{{$corrections->id}}/update" role="button">Approve</a>
-                  {!!Form::open(['action' => ['CertificateController@destroy', $corrections->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
+                  <a class="btn btn-primary" href="/correction/{{$pending->id}}" role="button">View</a>
+                  {!!Form::open(['action' => ['CertificateController@destroy', $pending->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
                   {{Form::hidden('_method', 'DELETE')}}
                   {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
                   {!!Form::close()!!}
                 </td>
                 </tr>
+          @endforeach
         </tbody>
       </table>
 @endsection

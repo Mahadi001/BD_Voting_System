@@ -28,7 +28,8 @@ class HomeController extends Controller
     public function index()
     {
         $corrections = BirthCertificate::where('bid',auth()->user()->bid )->first();
-        return view('layouts.user-dashboard', compact('corrections'));
+        $view = BirthCertificate::where('bid',auth()->user()->bid )->first();
+        return view('voter.correction.view', compact('corrections', 'view'));
     }
 
 }
