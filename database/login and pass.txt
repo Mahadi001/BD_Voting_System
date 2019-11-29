@@ -1,0 +1,11 @@
+admin login 
+admin email - admin@mail.com
+password - 12345678
+
+user login
+user mail - test@mail.com
+password - 12345678
+
+sub admin login
+sub admin mail - awamileague@mail.com
+password - 12345678

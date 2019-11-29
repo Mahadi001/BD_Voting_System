@@ -16,7 +16,7 @@ class CandidateController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:admin');
+        $this->middleware('auth:admin',['except' => ['apply']]);
     }
     /**
      * Display a listing of the resource.
@@ -48,6 +48,21 @@ class CandidateController extends Controller
         //
     }
 
+    public function apply()
+    {
+
+        $divisions = [];
+
+        $collection = Divisions::select('id','name')->get();
+
+        foreach($collection as $value){
+            $divisions[  $value->id  ] =  $value->name;
+        }
+        $corrections = BirthCertificate::where('bid', auth()->user()->bid )->first();
+        $political_parties = Political_Parties::all();
+        return view('admin.candidate.create', compact('political_parties', 'divisions','corrections'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -67,7 +82,7 @@ class CandidateController extends Controller
      */
     public function show($id)
     {
-        //
+        return 'show';
     }
 
     /**

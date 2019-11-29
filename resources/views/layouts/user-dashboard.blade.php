@@ -7,7 +7,7 @@
                 <div class="list-group list-group-flush">
                     <a href="/correction/{{$corrections->id}}/view" class="list-group-item list-group-item-action bg-light">Dashboard</a>
                     <a href="#" class="list-group-item list-group-item-action bg-light">Vote</a>
-                    <a href="{{ route('candidate.index') }}" class="list-group-item list-group-item-action bg-light">Apply for Candidate</a>
+                    <a href="{{ route('user.apply')}}" class="list-group-item list-group-item-action bg-light">Apply for Candidate</a>
                     <a href="/correction/{{$corrections->id}}/edit" class="list-group-item list-group-item-action bg-light">Apply for Correction</a>
                 </div>
                 </div>

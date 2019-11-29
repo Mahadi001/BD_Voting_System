@@ -133,51 +133,29 @@ class CorrectionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'bid' => 'required',
-            'fname' => 'required',
-            'mname' => 'required',
-            'lname' => 'required',
-            'birthPlace' => 'required',
-            'birthCountry' => 'required',
-            'dateOfBirth' => 'required',
-            'fathername' => 'required',
-            'mothername' => 'required',
-            'height' => 'required',
-            'eyesColor' => 'required',
-            'sex' => 'required',
-            'telephone' => 'required',
-            'mobile' => 'required',
-            'emergencyContact' => 'required',
-            'address' => 'required',
-            'address2' => 'required',
-            'country' => 'required',
-            'state' => 'required',
-            'zip' => 'required'
-        ]);
-
-        $correction = BirthCertificate::find($id);
-        $correction->bid = $request->input('bid');
-        $correction->fname = $request->input('fname');
-        $correction->mname = $request->input('mname');
-        $correction->lname = $request->input('lname');
-        $correction->birthPlace = $request->input('birthPlace');
-        $correction->birthCountry = $request->input('birthCountry');
-        $correction->dateOfBirth = $request->input('dateOfBirth');
-        $correction->fathername = $request->input('fathername');
-        $correction->mothername = $request->input('mothername');
-        $correction->height = $request->input('height');
-        $correction->eyesColor = $request->input('eyesColor');
-        $correction->sex = $request->input('sex');
-        $correction->telephone = $request->input('telephone');
-        $correction->mobile = $request->input('mobile');
-        $correction->emergencyContact = $request->input('emergencyContact');
-        $correction->address = $request->input('address');
-        $correction->address2 = $request->input('address2');
-        $correction->country = $request->input('country');
-        $correction->state = $request->input('state');
-        $correction->zip = $request->input('zip');
-        $correction->save();
+        $pending = Pending::find($id);
+        $bcert = BirthCertificate::where('bid', $pending->bid)->firstOrFail();
+        $bcert->fname = $pending->fname;
+        $bcert->mname = $pending->mname;
+        $bcert->lname = $pending->lname;
+        $bcert->birthPlace = $pending->birthPlace;
+        $bcert->birthCountry = $pending->birthCountry;
+        $bcert->dateOfBirth = $pending->dateOfBirth;
+        $bcert->fathername = $pending->fathername;
+        $bcert->mothername = $pending->mothername;
+        $bcert->height = $pending->height;
+        $bcert->eyesColor = $pending->eyesColor;
+        $bcert->sex = $pending->sex;
+        $bcert->telephone = $pending->telephone;
+        $bcert->mobile = $pending->mobile;
+        $bcert->emergencyContact = $pending->emergencyContact;
+        $bcert->address = $pending->address;
+        $bcert->address2 = $pending->address2;
+        $bcert->country = $pending->country;
+        $bcert->state = $pending->state;
+        $bcert->zip = $pending->zip;
+        $bcert->save();
+        $pending->delete();
         return redirect('/correction')->with('success', 'Correction Approved');
     }
 

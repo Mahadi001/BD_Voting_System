@@ -25,6 +25,7 @@ Route::get('/correction/{correction}/view', 'CorrectionController@view')->name('
 Route::resource('vote', 'VoteController');
 
 Route::resource('candidate', 'CandidateController');
+Route::get('/candidate_apply', 'CandidateController@apply')->name('user.apply')->middleware('auth:web');
 
 Route::get('/home', 'HomeController@index')->name('user');
 Route::get('/', 'PagesController@index')->name('home');
