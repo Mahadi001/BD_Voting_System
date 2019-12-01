@@ -15,7 +15,7 @@ class SubAdminLoginController extends Controller
 
     public function showLoginForm()
     {
-        return view('auth.subAdmin-login');
+        return view('auth.political_party-login');
     }
 
     public function login(Request $request)
@@ -26,7 +26,7 @@ class SubAdminLoginController extends Controller
         ]);
 
         if(Auth::guard('subAdmin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)){
-            return redirect()->intended(route('subAdmin.dashboard'));
+            return redirect()->intended(route('political_party.dashboard'));
         }
         return redirect()->back()->withInput($request->only('email', 'remember'));
     }

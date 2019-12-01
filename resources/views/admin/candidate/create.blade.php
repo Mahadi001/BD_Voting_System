@@ -18,30 +18,28 @@
       
       <div class="mb-3">
           {{Form::label('political__parties', 'Location')}}
-        </div>
-      <div class="row">
         <div class="col-md-6 mb-3">
             {{Form::label('division', 'Division')}}
-            {{Form::select('division', $divisions, null, ['class' => 'form-control', 'placeholder' => 'Choose'])}}
+            {{Form::select('division', $divisions, null, ['id'=>'division','class' => 'form-control', 'placeholder' => 'Choose'])}}
         </div>
         <div class="col-md-6 mb-3">
             {{Form::label('district', 'District')}}
-            {{Form::select('district', ['D' => 'Dhaka'], null, ['class' => 'form-control', 'placeholder' => 'Choose'])}}
+            {{Form::select('district', [], null, [ 'id'=>'district', 'class' => 'form-control', 'placeholder' => 'Choose'])}}
         </div>
-      </div>
-      
-      <div class="row">
         <div class="col-md-6 mb-3">
             {{Form::label('subdistrict', 'Upazilla/Thana')}}
-            {{Form::select('subdistrict', ['B' => 'Bangladesh'], null, ['class' => 'form-control', 'placeholder' => 'Choose'])}}
-        </div>
-        <div class="col-md-6 mb-3">
-            {{Form::label('subDistrict', 'Sub District')}}
-            {{Form::select('subDistrict', ['D' => 'Dhaka'], null, ['class' => 'form-control', 'placeholder' => 'Choose'])}}
+            {{Form::select('subdistrict', [], null, ['id'=>'upazila','class' => 'form-control', 'placeholder' => 'Choose'])}}
         </div>
       </div>
 
       <hr class="mb-4">
+
+      <div class="mb-3">
+        {{Form::label('address', 'Address')}}
+        {{Form::text('address', '', ['class' => 'form-control', 'placeholder' => 'address'])}}
+      </div>
+      <hr class="mb-4">  
+      
 
       <div class="mb-3">
         {{Form::label('political__parties', 'Select Political Parties')}}
@@ -73,9 +71,59 @@
        </div>
       <hr class="mb-4">
       {{Form::submit('Apply', ['class' => 'btn btn-primary col-md-2 col-xs-2 col1 center-block'])}}
-      {{-- {!! Form::close() !!} --}}
+
       </div>
     </div>
     </div>
+    <script src="{{ asset('js/jquery.min.js') }}" ></script>
+    <script>
+    $(document).ready(function () {
+        $("#division").change( function () {
+            var division = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "{{ route('division_to_district')}}",
+                data: { division: division }
+            }).done(function (data) {
+                console.log(data);
+                $("#district").html(data.districts);
+            });
+        
+        });
+        $("#district").change( function () {
+            var district = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "{{ route('district_to_upazilla')}}",
+                data: { district: district }
+            }).done(function (data) {
+                console.log(data);
+                $("#upazila").html(data.upazila);
+            });
+        });
+
+        $("#upazila").change( function () {
+            var rmo = $(this).val();
+            var division = $("#division").val();
+            var district = $("#district").val();
+            var upazila  = $("#upazila").val();
+            
+            $.ajax({
+                type: "GET",
+                url: "{{ route('division_district_upazilla_rmo_to_union') }}",
+                data: { division: division, district: district, upazila: upazila, rmo: rmo }
+            }).done(function (data) {
+                console.log(data);
+                $("#unionORward").html(data.unionsHtml);
+                $("#rmoOption").html("");
+                if(data.rmoHtml){
+                    $("#rmoOption").html(data.rmoHtml);
+                }
+            });
+        });
+
+
+    });
+    </script>
 @endsection
   

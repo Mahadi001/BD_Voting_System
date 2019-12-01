@@ -43,9 +43,17 @@ Route::prefix('admin')->group(function(){
     Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
 });
 
-Route::prefix('subAdmin')->group(function(){
-    Route::get('/login', 'Auth\SubAdminLoginController@showLoginForm')->name('subAdmin.login');
-    Route::post('/login', 'Auth\SubAdminLoginController@login')->name('subAdmin.login.submit');
-    Route::get('/', 'SubAdminController@index')->name('subAdmin.dashboard');
-    Route::get('/logout', 'Auth\SubAdminLoginController@logout')->name('subAdmin.logout');
+Route::prefix('political_party')->group(function(){
+    Route::get('/login', 'Auth\SubAdminLoginController@showLoginForm')->name('political_party.login');
+    Route::post('/login', 'Auth\SubAdminLoginController@login')->name('political_party.login.submit');
+    Route::get('/', 'SubAdminController@index')->name('political_party.dashboard');
+    Route::get('/logout', 'Auth\SubAdminLoginController@logout')->name('political_party.logout');
 });
+
+Route::get('/address', 'AjaxController@division')->name('division');
+
+Route::get('/district', 'AjaxController@district')->name('division_to_district');
+
+Route::get('/upazila', 'AjaxController@upazilla')->name('district_to_upazilla');
+
+Route::get('/rmo', 'AjaxController@union')->name('division_district_upazilla_rmo_to_union');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use Auth;
 
 class LoginController extends Controller
@@ -42,5 +43,22 @@ class LoginController extends Controller
     {
         Auth::guard('web')->logout();
         return redirect('/');
+    }
+    
+    public function login(Request $request)
+    {
+        $this->validate($request, [
+            'nid' => 'required',
+            'password' => 'required|min:8',
+        ]);
+
+        if(Auth::guard('web')->attempt(['nid' => $request->nid, 'password' => $request->password], $request->remember)){
+            return redirect()->intended(route('user'));
+        }
+        return redirect()->back()->withInput($request->only('nid', 'remember'));
+    }
+    public function username()
+    {
+        return 'nid';
     }
 }

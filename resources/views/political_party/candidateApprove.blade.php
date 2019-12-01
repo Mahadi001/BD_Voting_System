@@ -1,5 +1,5 @@
-@extends('layouts.subadmin-dashboard')
-@section('subadmin-content')
+@extends('layouts.political_party-dashboard')
+@section('political_party-content')
 <table class="table table-bordered">
         <thead>
           <tr>

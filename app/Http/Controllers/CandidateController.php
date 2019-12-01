@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\BirthCertificate;
 use App\Political_Parties;
 use App\Divisions;
+use App\Districts;
+use App\Upazilla;
+use App\Union;
+use App\Rmo;
+use App\Constituencies;
 
 class CandidateController extends Controller
 {
@@ -48,7 +53,7 @@ class CandidateController extends Controller
         //
     }
 
-    public function apply()
+    public function apply(Request $request)
     {
 
         $divisions = [];
@@ -58,9 +63,43 @@ class CandidateController extends Controller
         foreach($collection as $value){
             $divisions[  $value->id  ] =  $value->name;
         }
+
+        $stmt = Districts::where('did', $request->division)->get();
+        $districts = '<option value="" >select</option>';
+    
+        foreach($stmt as $value){
+            $districts .= '<option value="'. $value->id .'" >'. $value->name .'</option>';
+        }
+        $stmt = Upazilla::where('district_id', $request->district)->get();
+        $upazilas = '<option value="" >select</option>';
+    
+        foreach($stmt as $value){
+            $upazilas .= '<option value="'. $value->id .'" >'. $value->name .'</option>';
+        }
+        $unions = Union::with('rmo')->where([
+            ['division_id', $request->division],
+            ['district_id', $request->district],
+            ['upazilla_id', $request->upazila],
+            ['rmo_type', $request->rmo]
+        ])->get();
+    
+        $rmoHtmls = '';
+        if($unions != '[]' ){
+            $rmo = $unions->unique('rmo')->pluck('rmo');
+            $rmoHtmls = '<select name="municipality" id="municipality" >';
+            foreach($rmo as $value){
+                $rmoHtmls .= '<option value="'. $value->id .'" >'. $value->name .'</option>';
+            }
+            $rmoHtmls .= '</select>';
+        }
+        
+        $unionsHtmls = '<option value="" >select</option>';
+        foreach($unions as $value){
+            $unionsHtmls .= '<option value="'. $value->id .'" >'. $value->name .'</option>';
+        }
         $corrections = BirthCertificate::where('bid', auth()->user()->bid )->first();
         $political_parties = Political_Parties::all();
-        return view('admin.candidate.create', compact('political_parties', 'divisions','corrections'));
+        return view('admin.candidate.create', compact('political_parties', 'divisions','corrections','districts','upazilas','unionsHtmls','rmoHtmls'));
     }
 
     /**
