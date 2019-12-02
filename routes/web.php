@@ -68,4 +68,8 @@ Route::get('/election_type_to_position', 'AjaxController@election_type_to_positi
 Route::get('/city_to_ward', 'AjaxController@city_to_ward')->name('city_to_ward');
 Route::get('/election_type_position_to_zone', 'AjaxController@election_type_position_to_zone')->name('election_type_position_to_zone');
 
+Route::get('/election_type_position_to_user_election_area', 'AjaxController@election_type_position_to_user_election_area')
+        ->name('election_type_position_to_user_election_area')
+        ->middleware('auth:web');
+
 

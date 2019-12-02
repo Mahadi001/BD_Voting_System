@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 27, 2019 at 08:03 PM
--- Server version: 10.4.8-MariaDB
--- PHP Version: 7.3.11
+-- Host: localhost
+-- Generation Time: Dec 02, 2019 at 06:34 PM
+-- Server version: 8.0.18-0ubuntu0.19.10.1
+-- PHP Version: 7.3.11-0ubuntu0.19.10.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -30,12 +30,12 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admins` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `job_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `job_title` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -56,26 +56,26 @@ INSERT INTO `admins` (`id`, `name`, `email`, `job_title`, `email_verified_at`, `
 CREATE TABLE `birth_certificates` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `bid` int(14) DEFAULT NULL,
-  `fname` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mname` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lname` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `birthPlace` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `birthCountry` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fname` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mname` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lname` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `birthPlace` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `birthCountry` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `dateOfBirth` date NOT NULL,
-  `fathername` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mothername` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fathername` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mothername` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `height` double NOT NULL,
-  `eyesColor` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sex` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `eyesColor` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sex` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `telephone` double NOT NULL,
   `mobile` double NOT NULL,
   `emergencyContact` double NOT NULL,
-  `address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address2` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `country` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `state` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `zip` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address2` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `state` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `zip` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -92,30 +92,29 @@ INSERT INTO `birth_certificates` (`id`, `bid`, `fname`, `mname`, `lname`, `birth
 -- --------------------------------------------------------
 
 --
--- Table structure for table `candidates`
+-- Table structure for table `constituencies`
 --
 
-CREATE TABLE `candidates` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `contituencies_details`
---
-
-CREATE TABLE `contituencies_details` (
+CREATE TABLE `constituencies` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `division_id` int(11) NOT NULL,
   `district_id` int(11) NOT NULL,
-  `thana_id` int(11) NOT NULL,
-  `constituenceies_id` int(11) NOT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `constituencies`
+--
+
+INSERT INTO `constituencies` (`id`, `division_id`, `district_id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 3, 1, 'Dhaka 1', NULL, NULL),
+(2, 3, 1, 'Dhaka 2', NULL, NULL),
+(3, 3, 9, 'Narayanganj 1', NULL, NULL),
+(4, 3, 9, 'Narayanganj 2', NULL, NULL),
+(5, 4, 12, 'Bagerhat 1', NULL, NULL),
+(6, 4, 13, 'Satkhira 1', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -126,26 +125,26 @@ CREATE TABLE `contituencies_details` (
 CREATE TABLE `corrections` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `bid` int(14) DEFAULT NULL,
-  `fname` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mname` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lname` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `birthPlace` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `birthCountry` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fname` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mname` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lname` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `birthPlace` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `birthCountry` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `dateOfBirth` date NOT NULL,
-  `fathername` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mothername` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fathername` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mothername` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `height` double NOT NULL,
-  `eyesColor` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sex` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `eyesColor` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sex` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `telephone` double NOT NULL,
   `mobile` double NOT NULL,
   `emergencyContact` double NOT NULL,
-  `address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address2` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `country` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `state` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `zip` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address2` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `state` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `zip` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -166,8 +165,8 @@ INSERT INTO `corrections` (`id`, `bid`, `fname`, `mname`, `lname`, `birthPlace`,
 CREATE TABLE `districts` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `did` bigint(20) NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -177,9 +176,9 @@ CREATE TABLE `districts` (
 --
 
 INSERT INTO `districts` (`id`, `did`, `name`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 3, 'Dhaka 	', NULL, NULL, NULL),
+(1, 3, 'Dhaka', NULL, NULL, NULL),
 (9, 3, 'Narayanganj ', NULL, NULL, NULL),
-(12, 4, 'Bagerhat ', NULL, NULL, NULL),
+(12, 4, 'Bagerhat', NULL, NULL, NULL),
 (13, 4, 'Satkhira', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
@@ -190,8 +189,8 @@ INSERT INTO `districts` (`id`, `did`, `name`, `remember_token`, `created_at`, `u
 
 CREATE TABLE `divisions` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -207,12 +206,62 @@ INSERT INTO `divisions` (`id`, `name`, `remember_token`, `created_at`, `updated_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `elections`
+--
+
+CREATE TABLE `elections` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `election_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date` date NOT NULL,
+  `start` time NOT NULL,
+  `end` time NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `elections`
+--
+
+INSERT INTO `elections` (`id`, `election_type`, `date`, `start`, `end`, `created_at`, `updated_at`) VALUES
+(5, 'Perlament', '2019-12-02', '01:00:00', '02:00:00', '2019-12-01 23:34:56', '2019-12-01 23:34:56'),
+(7, 'City', '2019-12-03', '01:00:00', '02:00:00', '2019-12-01 23:45:43', '2019-12-01 23:45:43');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `election_details`
+--
+
+CREATE TABLE `election_details` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `election_id` int(11) NOT NULL,
+  `position` int(11) NOT NULL,
+  `position_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `zone_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `zone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `election_details`
+--
+
+INSERT INTO `election_details` (`id`, `election_id`, `position`, `position_name`, `zone_type`, `zone`, `created_at`, `updated_at`) VALUES
+(4, 5, 1, 'Member of Parliament(MP)', 'constituencies', 'a:2:{i:0;s:1:\"2\";i:1;s:1:\"3\";}', '2019-12-01 23:34:56', '2019-12-01 23:34:56'),
+(5, 7, 2, 'Mayor', 'rmo', 'a:1:{i:0;s:1:\"1\";}', '2019-12-01 23:45:43', '2019-12-01 23:45:43'),
+(6, 7, 3, 'Commissioner ', 'ward', 'a:2:{i:0;s:1:\"1\";i:1;s:1:\"2\";}', '2019-12-01 23:45:43', '2019-12-01 23:45:43');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `election_types`
 --
 
 CREATE TABLE `election_types` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -234,11 +283,11 @@ INSERT INTO `election_types` (`id`, `name`, `created_at`, `updated_at`) VALUES
 
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -249,7 +298,7 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -268,7 +317,6 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (9, '2019_11_25_124345_create_votes_table', 6),
 (10, '2019_11_25_125624_create_parliaments_table', 6),
 (11, '2019_11_25_131100_create_political__parties_table', 6),
-(12, '2019_11_25_142135_create_candidates_table', 7),
 (13, '2019_11_26_144727_create_divisions_table', 7),
 (14, '2019_11_26_145254_create_districts_table', 8),
 (15, '2019_11_26_151723_create_election_types_table', 9),
@@ -281,20 +329,12 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (23, '2019_11_27_052908_create_unions_table', 14),
 (24, '2019_11_27_052947_create_parliamentary__constituencies_table', 14),
 (25, '2019_11_27_060223_create_contituencies_details_table', 14),
-(28, '2019_11_27_161931_create_pendings_table', 15);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `parliamentary__constituencies`
---
-
-CREATE TABLE `parliamentary__constituencies` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+(28, '2019_11_27_161931_create_pendings_table', 15),
+(29, '2019_11_30_043502_create_rmos_table', 16),
+(30, '2019_11_30_145735_create_rmo_areas_table', 17),
+(31, '2019_11_30_160652_create_constituencies_table', 18),
+(32, '2019_12_01_172824_create_elections_table', 19),
+(33, '2019_12_02_050356_create_election_details_table', 19);
 
 -- --------------------------------------------------------
 
@@ -303,8 +343,8 @@ CREATE TABLE `parliamentary__constituencies` (
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -317,26 +357,26 @@ CREATE TABLE `password_resets` (
 CREATE TABLE `pendings` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `birthCertificate_id` bigint(20) DEFAULT NULL,
-  `fname` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mname` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lname` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `birthPlace` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `birthCountry` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fname` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mname` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lname` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `birthPlace` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `birthCountry` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `dateOfBirth` date NOT NULL,
-  `fathername` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mothername` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fathername` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mothername` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `height` double NOT NULL,
-  `eyesColor` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sex` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `eyesColor` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sex` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `telephone` double NOT NULL,
   `mobile` double NOT NULL,
   `emergencyContact` double NOT NULL,
-  `address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address2` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `country` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `state` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `zip` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address2` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `state` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `zip` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -356,7 +396,7 @@ INSERT INTO `pendings` (`id`, `birthCertificate_id`, `fname`, `mname`, `lname`, 
 
 CREATE TABLE `political__parties` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -381,7 +421,9 @@ INSERT INTO `political__parties` (`id`, `name`, `created_at`, `updated_at`) VALU
 
 CREATE TABLE `positions` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `election_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `range` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -390,11 +432,36 @@ CREATE TABLE `positions` (
 -- Dumping data for table `positions`
 --
 
-INSERT INTO `positions` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Member of Parliament(MP)', NULL, NULL),
-(2, 'Mayor', NULL, NULL),
-(3, 'Chairman', NULL, NULL),
-(4, 'Commissioner ', NULL, NULL);
+INSERT INTO `positions` (`id`, `election_type`, `range`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Perlament', 'constituencies', 'Member of Parliament(MP)', NULL, NULL),
+(2, 'City', 'rmo', 'Mayor', NULL, NULL),
+(3, 'City', 'ward', 'Commissioner ', NULL, NULL),
+(4, 'Union', 'union', 'Chairman', NULL, NULL),
+(5, 'Union', 'union', 'Member', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rmos`
+--
+
+CREATE TABLE `rmos` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `rmos`
+--
+
+INSERT INTO `rmos` (`id`, `name`, `type`, `created_at`, `updated_at`) VALUES
+(1, 'Dhaka North City Corporation', 'city', NULL, NULL),
+(2, 'Dhaka South City Corporation', 'city', NULL, NULL),
+(3, 'Narayangonj City Corporation', 'city', NULL, NULL),
+(4, 'Polli', 'polli', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -404,12 +471,12 @@ INSERT INTO `positions` (`id`, `name`, `created_at`, `updated_at`) VALUES
 
 CREATE TABLE `sub_admins` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `job_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `job_title` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -424,36 +491,6 @@ INSERT INTO `sub_admins` (`id`, `name`, `email`, `email_verified_at`, `job_title
 -- --------------------------------------------------------
 
 --
--- Table structure for table `thana__upazillas`
---
-
-CREATE TABLE `thana__upazillas` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `division_id` int(11) NOT NULL,
-  `district_id` int(11) NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `thana__upazillas`
---
-
-INSERT INTO `thana__upazillas` (`id`, `division_id`, `district_id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 3, 1, 'Khilgaon', NULL, NULL),
-(2, 3, 1, 'Savar', NULL, NULL),
-(3, 3, 1, 'Keraniganj', NULL, NULL),
-(4, 3, 1, 'Jatrabari', NULL, NULL),
-(5, 3, 9, 'Shiddhirganj', NULL, NULL),
-(6, 3, 9, 'Narayanganj Sadar', NULL, NULL),
-(7, 3, 9, 'Rupganj', NULL, NULL),
-(8, 4, 12, 'Chitalmar', NULL, NULL),
-(9, 4, 13, 'Assasuni', NULL, NULL);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `unions`
 --
 
@@ -461,11 +498,66 @@ CREATE TABLE `unions` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `division_id` int(11) NOT NULL,
   `district_id` int(11) NOT NULL,
-  `thana_id` int(11) NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `upazilla_id` int(11) NOT NULL,
+  `rmo_id` int(11) DEFAULT NULL,
+  `rmo_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `constituencies_id` int(11) NOT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `unions`
+--
+
+INSERT INTO `unions` (`id`, `division_id`, `district_id`, `upazilla_id`, `rmo_id`, `rmo_type`, `constituencies_id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 3, 1, 1, 1, 'city', 1, 'ward 1', NULL, NULL),
+(2, 3, 1, 1, 1, 'city', 1, 'ward 2', NULL, NULL),
+(3, 3, 1, 2, 4, 'polli', 2, 'Ashulia', NULL, NULL),
+(4, 3, 1, 2, 4, 'polli', 2, 'Kaundia', NULL, NULL),
+(5, 3, 1, 3, 4, 'polli', 1, 'Zinjira', NULL, NULL),
+(6, 3, 1, 3, 4, 'polli', 1, 'Taranagar', NULL, NULL),
+(7, 3, 1, 4, 2, 'city', 2, 'ward 1', NULL, NULL),
+(8, 3, 1, 4, 2, 'city', 2, 'ward 2', NULL, NULL),
+(9, 3, 9, 5, 3, 'city', 3, 'ward 1', NULL, NULL),
+(10, 3, 9, 5, 3, 'city', 3, 'ward 2', NULL, NULL),
+(11, 3, 9, 6, 3, 'city', 4, 'ward 3', NULL, NULL),
+(12, 3, 9, 6, 3, 'city', 4, 'ward 4', NULL, NULL),
+(13, 3, 9, 7, 4, 'polli', 4, 'Rupganj', NULL, NULL),
+(14, 4, 12, 8, 4, 'polli', 5, 'Chitalmar', NULL, NULL),
+(15, 4, 13, 9, 4, 'polli', 6, 'Assasuni', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `upazillas`
+--
+
+CREATE TABLE `upazillas` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `division_id` int(11) NOT NULL,
+  `district_id` int(11) NOT NULL,
+  `rmo_id` int(11) NOT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `upazillas`
+--
+
+INSERT INTO `upazillas` (`id`, `division_id`, `district_id`, `rmo_id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 3, 1, 2, 'Khilgaon', NULL, NULL),
+(2, 3, 1, 4, 'Savar', NULL, NULL),
+(3, 3, 1, 4, 'Keraniganj', NULL, NULL),
+(4, 3, 1, 1, 'Jatrabari', NULL, NULL),
+(5, 3, 9, 3, 'Shiddhirganj', NULL, NULL),
+(6, 3, 9, 3, 'Narayanganj Sadar', NULL, NULL),
+(7, 3, 9, 4, 'Rupganj', NULL, NULL),
+(8, 4, 12, 4, 'Chitalmar', NULL, NULL),
+(9, 4, 13, 4, 'Assasuni', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -476,21 +568,28 @@ CREATE TABLE `unions` (
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `bid` int(14) DEFAULT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nid` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telephone` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `division_id` int(10) NOT NULL DEFAULT '0',
+  `district_id` int(10) NOT NULL DEFAULT '0',
+  `upazilla_id` int(10) NOT NULL DEFAULT '0',
+  `union_id` int(10) NOT NULL DEFAULT '0',
+  `rmo_id` int(10) NOT NULL DEFAULT '0',
+  `constituencies_id` int(10) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `bid`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 1234567891, 'test', 'test@mail.com', NULL, '$2y$10$2eMdnYwxelOSFHLYbFiFhOQMvgCSBNWR6Tr14vXp1zDXilvfsZkfa', NULL, '2019-11-19 05:46:41', '2019-11-19 05:46:41');
+INSERT INTO `users` (`id`, `bid`, `nid`, `name`, `telephone`, `password`, `remember_token`, `created_at`, `updated_at`, `division_id`, `district_id`, `upazilla_id`, `union_id`, `rmo_id`, `constituencies_id`) VALUES
+(5, 1234567893, '1112222', 'Ali Imtiaz Jamil', NULL, '$2y$10$AExI8okSBCquGtmT3/gc/eZtNoteGMMTKvq2imBI4D42BudvDkBTK', NULL, '2019-12-01 08:15:05', '2019-12-01 08:15:05', 3, 1, 1, 1, 1, 1),
+(12, 1234567892, '3994932619', 'Ali Imtiaz Jamil', '345', '$2y$10$9Kgy6dmXVna78WNnUSiTkOEr5h72vfKtk14Apu9DMalixxelBI9be', NULL, '2019-12-01 10:18:43', '2019-12-01 10:18:43', 3, 9, 5, 9, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -501,29 +600,13 @@ INSERT INTO `users` (`id`, `bid`, `name`, `email`, `email_verified_at`, `passwor
 CREATE TABLE `votes` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `pid` int(11) NOT NULL,
-  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `starting_date` datetime NOT NULL,
   `ending_date` datetime NOT NULL,
   `starting_time` time DEFAULT NULL,
   `ending_time` time DEFAULT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `wards`
---
-
-CREATE TABLE `wards` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `division_id` int(11) NOT NULL,
-  `district_id` int(11) NOT NULL,
-  `thana_id` int(11) NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -546,15 +629,9 @@ ALTER TABLE `birth_certificates`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `candidates`
+-- Indexes for table `constituencies`
 --
-ALTER TABLE `candidates`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `contituencies_details`
---
-ALTER TABLE `contituencies_details`
+ALTER TABLE `constituencies`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -576,6 +653,18 @@ ALTER TABLE `divisions`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `elections`
+--
+ALTER TABLE `elections`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `election_details`
+--
+ALTER TABLE `election_details`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `election_types`
 --
 ALTER TABLE `election_types`
@@ -591,12 +680,6 @@ ALTER TABLE `failed_jobs`
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `parliamentary__constituencies`
---
-ALTER TABLE `parliamentary__constituencies`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -625,17 +708,17 @@ ALTER TABLE `positions`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `rmos`
+--
+ALTER TABLE `rmos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `sub_admins`
 --
 ALTER TABLE `sub_admins`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `sub_admins_email_unique` (`email`);
-
---
--- Indexes for table `thana__upazillas`
---
-ALTER TABLE `thana__upazillas`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `unions`
@@ -644,22 +727,21 @@ ALTER TABLE `unions`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `upazillas`
+--
+ALTER TABLE `upazillas`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `votes`
 --
 ALTER TABLE `votes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `wards`
---
-ALTER TABLE `wards`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -679,16 +761,10 @@ ALTER TABLE `birth_certificates`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `candidates`
+-- AUTO_INCREMENT for table `constituencies`
 --
-ALTER TABLE `candidates`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `contituencies_details`
---
-ALTER TABLE `contituencies_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `constituencies`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `corrections`
@@ -709,6 +785,18 @@ ALTER TABLE `divisions`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
+-- AUTO_INCREMENT for table `elections`
+--
+ALTER TABLE `elections`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `election_details`
+--
+ALTER TABLE `election_details`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `election_types`
 --
 ALTER TABLE `election_types`
@@ -724,13 +812,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
-
---
--- AUTO_INCREMENT for table `parliamentary__constituencies`
---
-ALTER TABLE `parliamentary__constituencies`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `pendings`
@@ -751,39 +833,39 @@ ALTER TABLE `positions`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `rmos`
+--
+ALTER TABLE `rmos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `sub_admins`
 --
 ALTER TABLE `sub_admins`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `thana__upazillas`
---
-ALTER TABLE `thana__upazillas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
---
 -- AUTO_INCREMENT for table `unions`
 --
 ALTER TABLE `unions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `upazillas`
+--
+ALTER TABLE `upazillas`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `votes`
 --
 ALTER TABLE `votes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `wards`
---
-ALTER TABLE `wards`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 

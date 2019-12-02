@@ -1,4 +1,4 @@
-@extends('layouts.user-dashboard')
+@extends('layouts.user')
 @section('user-content')
     <div class="container">
             <h1 class="my-4">Mayor</h1>

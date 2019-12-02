@@ -219,6 +219,28 @@ class AjaxController extends Controller
         return $positions;
     }
 
+    public function election_type_position_to_user_election_area(Request $request){
+
+        $electionArea = 'Not Available';
+        $position = Position::find($request->position);
+        if($position->range == 'rmo'){
+            $electionArea = Rmo::find( auth()->user()->rmo_id )->name;
+        }
+        elseif($position->range == 'ward' ){
+            $electionArea = Union::find( auth()->user()->union_id )->name;
+        }
+        elseif($position->range == 'constituencies'){
+            $electionArea = Constituencies::find( auth()->user()->constituencies_id )->name;
+        }
+        elseif($position->range == 'union'){
+            if( Rmo::find( auth()->user()->rmo_id )->type  == 'polli' ){
+                $electionArea = Union::find( auth()->user()->union_id )->name;
+            }
+        }
+        return $electionArea;
+
+    }
+
 
     /**
      * Display a listing of the resource.
