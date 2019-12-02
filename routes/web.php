@@ -57,3 +57,16 @@ Route::get('/district', 'AjaxController@district')->name('division_to_district')
 Route::get('/upazila', 'AjaxController@upazilla')->name('district_to_upazilla');
 
 Route::get('/rmo', 'AjaxController@union')->name('division_district_upazilla_rmo_to_union');
+
+
+Route::get('/admin/election', 'ElectionController@index')->name('election.index');
+Route::get('/admin/election/create', 'ElectionController@create')->name('election.create');
+Route::post('/admin/election', 'ElectionController@store')->name('election.store');
+
+
+
+Route::get('/election_type_to_position', 'AjaxController@election_type_to_position')->name('election_type_to_position');
+Route::get('/city_to_ward', 'AjaxController@city_to_ward')->name('city_to_ward');
+Route::get('/election_type_position_to_zone', 'AjaxController@election_type_position_to_zone')->name('election_type_position_to_zone');
+
+

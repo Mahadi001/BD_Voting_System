@@ -99,6 +99,10 @@
             @yield('content')
         </main>
     </div>
+
+
+    <script src="{{ asset('js/jquery.min.js') }}" ></script>
+    @stack('script')
 </body>
 </html>
 

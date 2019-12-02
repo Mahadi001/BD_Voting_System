@@ -9,6 +9,7 @@ use App\Upazilla;
 use App\Union;
 use App\Rmo;
 use App\Constituencies;
+use App\Position;
 
 class AjaxController extends Controller
 {
@@ -137,13 +138,87 @@ class AjaxController extends Controller
             $rmoHtml .= '</select>';
         }
         
-        $unionsHtmls = '<option value="" >select</option>';
+        $unionsHtmls = '<option value="0" >select Union</option>';
         foreach($unions as $value){
             $unionsHtmls .= '<option value="'. $value->id .'" >'. $value->name .'</option>';
         }
     
         return compact('unionsHtmls', 'rmoHtml');
     }
+
+    public function election_type_position_to_zone(Request $request){
+
+        $position = Position::find($request->position);
+        if($request->election_type == 'Perlament'){
+            $zone = '<label for="zone">Constituencies</label><select name="zone[]" id="zone" class="form-control" multiple>';
+            foreach(Constituencies::all() as $value){
+                $zone .= '<option value="'. $value->id .'" >'. $value->name .'</option>';
+            }
+            $zone .= '</select>';
+        } 
+        elseif($request->election_type == 'City'){
+            if( $position->range == 'rmo' ){
+                $zone = '<label for="zone">City Corporation</label><select class="form-control" name="zone[]" id="zone" multiple>';
+                foreach(Rmo::where('type','city')->get() as $value){
+                    $zone .= '<option value="'. $value->id .'" >'. $value->name .'</option>';
+                }
+                $zone .= '</select>';
+            }
+            elseif( $position->range == 'ward' ){
+                $zone = '<label for="zone">City Corporation</label><select class="form-control" name="city" id="city" ><option value="" >select city</option>';
+                foreach(Rmo::where('type','city')->get() as $value){
+                    $zone .= '<option value="'. $value->id .'" >'. $value->name .'</option>';
+                }
+                $zone .= '</select>
+                        <label for="zone">Ward</label>
+                        <select name="zone[]" id="zone" class="form-control" multiple>
+                            <option value="" >select ward</option>
+                        </select>';
+            }
+        }
+        elseif($request->election_type == 'Union'){
+
+            $divisions = Divisions::all();
+                $zone = '<label for="zone">Division</label><select class="form-control" name="division" id="division" ><option value="" >select division</option>';
+                foreach($divisions as $value){
+                    $zone .= '<option value="'. $value->id .'" >'. $value->name .'</option>';
+                }
+                $zone .= '</select>
+                <input name="rmo" id="rmo" type="hidden" value="polli" />
+
+                <label for="zone">District</label>
+                <select name="district" id="district" class="form-control">
+                    <option value="" >select district</option>
+                </select>
+                <label for="zone">Upazilla</label>
+                <select name="upazila" id="upazila" class="form-control">
+                    <option value="" >select upazila</option>
+                </select>
+                <label for="zone">Union</label>
+                <select name="zone[]" id="zone" multiple class="form-control">
+                </select>';
+        }
+        return compact('zone');
+    }
+    
+    public function city_to_ward(Request $request){
+        $union = Union::with('rmo')->where('rmo_id', $request->rmo)->get();
+        $unions = '';
+        foreach($union as $value){
+            $unions .= '<option value="'. $value->id .'" >'. $value->name .'</option>';
+        }
+        return $unions;
+    }
+
+    public function election_type_to_position(Request $request){
+        $position = Position::where('election_type', $request->election_type)->get();
+        $positions = '<option value="" >select</option>';
+        foreach($position as $value){
+            $positions .= '<option value="'. $value->id .'" >'. $value->name .'</option>';
+        }
+        return $positions;
+    }
+
 
     /**
      * Display a listing of the resource.

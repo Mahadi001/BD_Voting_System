@@ -14,7 +14,17 @@
                     </ul>
                 </div>
             </div>
-            <a href="{{ route('vote.index') }}" class="list-group-item list-group-item-action bg-light">Create Vote</a>
+
+            <a data-toggle="collapse" href="#dropdown-election" class="list-group-item list-group-item-action bg-light">Election</a>
+	        <div id="dropdown-election" class="panel-collapse collapse in" aria-expanded="true" style="">
+                <div class="list-group-item list-group-item-action bg-light">
+                    <ul class="nav navbar-nav">
+                        <li><a href="{{ route('election.create') }}">Create</a></li>
+                        <li><a href="{{ route('election.index') }}">Records</a></li>
+                    </ul>
+                </div>
+            </div>
+
             <a href="{{ route('candidate.index') }}" class="list-group-item list-group-item-action bg-light">Candidate Approval</a>
             <a href="{{ route('correction.index') }}" class="list-group-item list-group-item-action bg-light">Correction Application</a>
  
