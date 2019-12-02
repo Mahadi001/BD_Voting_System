@@ -61,7 +61,7 @@ Route::get('/rmo', 'AjaxController@union')->name('division_district_upazilla_rmo
 Route::get('/admin/election', 'ElectionController@index')->name('election.index');
 Route::get('/admin/election/create', 'ElectionController@create')->name('election.create');
 Route::post('/admin/election', 'ElectionController@store')->name('election.store');
-
+Route::get('/admin/election/show/{id}', 'ElectionController@show')->name('election.show');
 
 
 Route::get('/election_type_to_position', 'AjaxController@election_type_to_position')->name('election_type_to_position');

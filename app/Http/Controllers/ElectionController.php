@@ -27,7 +27,8 @@ class ElectionController extends Controller
      */
     public function index()
     {
-        return 'sdf';
+        $elections = Election::all();
+        return view('admin.election.lists', compact('elections'));
     }
 
     /**
@@ -78,9 +79,10 @@ class ElectionController extends Controller
      * @param  \App\Election  $election
      * @return \Illuminate\Http\Response
      */
-    public function show(Election $election)
+    public function show($id)
     {
-        //
+        $election = Election::with('details')->find($id);
+        return view('admin.election.show', compact('election'));
     }
 
     /**
