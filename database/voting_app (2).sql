@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 02, 2019 at 06:34 PM
+-- Generation Time: Dec 02, 2019 at 07:24 PM
 -- Server version: 8.0.18-0ubuntu0.19.10.1
 -- PHP Version: 7.3.11-0ubuntu0.19.10.1
 
@@ -88,6 +88,58 @@ INSERT INTO `birth_certificates` (`id`, `bid`, `fname`, `mname`, `lname`, `birth
 (1, 1234567891, 'ftest', 'mtest', 'ltest', 'dhaka', 'bangladesh', '1992-01-01', 'testfather', 'testmother', 192.2, 'blue', 'other', 101010101, 202020202, 303030303, '112/A dhaka', '112/A ctg', 'bd', 'dhaka', '1219', NULL, '2019-11-23 05:03:59', '2019-11-23 05:03:59'),
 (4, 1234567892, 'user2first', 'user2middle', 'user2last', 'Dhaka', 'Bangladesh', '2019-11-12', 'user2father', 'user2mother', 1.22, 'blue', 'others', 11111111111, 222222222222, 3333333333333, 'random bajar', 'random places', 'B', 'D', '1210', NULL, '2019-11-23 12:25:07', '2019-11-23 12:25:07'),
 (5, 1234567893, 'user3first', 'user3middle', 'user3last', 'Dhaka', 'Bangladesh', '2019-11-16', 'user3father', 'user3mother', 1.1313, 'red', 'others', 11111111111, 222222222222, 3333333333333, 'random bajar', 'random places', 'B', 'D', '1210', NULL, '2019-11-25 05:20:01', '2019-11-25 05:20:01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `candidates`
+--
+
+CREATE TABLE `candidates` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `fullname` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'candidate id',
+  `election_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `election_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `position_id` int(11) NOT NULL,
+  `position_name` int(11) NOT NULL,
+  `subadmin_id` int(11) NOT NULL COMMENT 'party id',
+  `division_id` int(11) NOT NULL,
+  `district_id` int(11) NOT NULL,
+  `upazilla_id` int(11) NOT NULL,
+  `union_id` int(11) NOT NULL,
+  `rmo_id` int(11) NOT NULL,
+  `constituencies_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `candidate_requests`
+--
+
+CREATE TABLE `candidate_requests` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `fullname` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'candidate id',
+  `election_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `election_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `position_id` int(11) NOT NULL,
+  `position_name` int(11) NOT NULL,
+  `subadmin_id` int(11) NOT NULL COMMENT 'party id',
+  `division_id` int(11) NOT NULL,
+  `district_id` int(11) NOT NULL,
+  `upazilla_id` int(11) NOT NULL,
+  `union_id` int(11) NOT NULL,
+  `rmo_id` int(11) NOT NULL,
+  `constituencies_id` int(11) NOT NULL,
+  `approved_by_party` int(11) NOT NULL DEFAULT '0',
+  `approved_by_ec` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -334,7 +386,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (30, '2019_11_30_145735_create_rmo_areas_table', 17),
 (31, '2019_11_30_160652_create_constituencies_table', 18),
 (32, '2019_12_01_172824_create_elections_table', 19),
-(33, '2019_12_02_050356_create_election_details_table', 19);
+(33, '2019_12_02_050356_create_election_details_table', 19),
+(34, '2019_11_25_142135_create_candidates_table', 20),
+(35, '2019_12_02_183116_create_candidate_requests_table', 20);
 
 -- --------------------------------------------------------
 
@@ -629,6 +683,18 @@ ALTER TABLE `birth_certificates`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `candidates`
+--
+ALTER TABLE `candidates`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `candidate_requests`
+--
+ALTER TABLE `candidate_requests`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `constituencies`
 --
 ALTER TABLE `constituencies`
@@ -761,6 +827,18 @@ ALTER TABLE `birth_certificates`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `candidates`
+--
+ALTER TABLE `candidates`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `candidate_requests`
+--
+ALTER TABLE `candidate_requests`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `constituencies`
 --
 ALTER TABLE `constituencies`
@@ -812,7 +890,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `pendings`

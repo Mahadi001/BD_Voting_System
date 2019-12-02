@@ -12,6 +12,9 @@ use App\Union;
 use App\Rmo;
 use App\Constituencies;
 use App\SubAdmin;
+use App\CandidateRequest;
+use App\Position;
+use App\Election;
 
 class CandidateController extends Controller
 {
@@ -63,53 +66,11 @@ class CandidateController extends Controller
             $parties[ $party->id  ] = $party->name;
         }
 
+        //return date('Y-m-d');
+        $eletions = Election::with('details')->where('date', '>', date('Y-m-d') )->get();
 
-        return view('voter.candidate.apply', compact('birthCert','parties'));
 
-        // $divisions = [];
-
-        // $collection = Divisions::select('id','name')->get();
-
-        // foreach($collection as $value){
-        //     $divisions[  $value->id  ] =  $value->name;
-        // }
-
-        // $stmt = Districts::where('did', $request->division)->get();
-        // $districts = '<option value="" >select</option>';
-    
-        // foreach($stmt as $value){
-        //     $districts .= '<option value="'. $value->id .'" >'. $value->name .'</option>';
-        // }
-        // $stmt = Upazilla::where('district_id', $request->district)->get();
-        // $upazilas = '<option value="" >select</option>';
-    
-        // foreach($stmt as $value){
-        //     $upazilas .= '<option value="'. $value->id .'" >'. $value->name .'</option>';
-        // }
-        // $unions = Union::with('rmo')->where([
-        //     ['division_id', $request->division],
-        //     ['district_id', $request->district],
-        //     ['upazilla_id', $request->upazila],
-        //     ['rmo_type', $request->rmo]
-        // ])->get();
-    
-        // $rmoHtmls = '';
-        // if($unions != '[]' ){
-        //     $rmo = $unions->unique('rmo')->pluck('rmo');
-        //     $rmoHtmls = '<select name="municipality" id="municipality" >';
-        //     foreach($rmo as $value){
-        //         $rmoHtmls .= '<option value="'. $value->id .'" >'. $value->name .'</option>';
-        //     }
-        //     $rmoHtmls .= '</select>';
-        // }
-        
-        // $unionsHtmls = '<option value="" >select</option>';
-        // foreach($unions as $value){
-        //     $unionsHtmls .= '<option value="'. $value->id .'" >'. $value->name .'</option>';
-        // }
-        // $corrections = BirthCertificate::where('bid', auth()->user()->bid )->first();
-        // $political_parties = Political_Parties::all();
-        // return view('voter.candidate.apply', compact('political_parties', 'divisions','corrections','districts','upazilas','unionsHtmls','rmoHtmls'));
+        return view('voter.candidate.apply', compact('birthCert','parties','eletions'));
     }
 
     /**
@@ -120,7 +81,25 @@ class CandidateController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
+        //return $request->all();
+        $position = Position::find($request->position);
+
+        $candidateRequest = new CandidateRequest;
+        $candidateRequest->fullname = $request->fullname;
+        $candidateRequest->user_id = auth()->user()->id;
+        //$candidateRequest->election_id = $request->;
+        $candidateRequest->election_type = $request->election_type;
+        $candidateRequest->position_id = $request->position;
+        $candidateRequest->position_name = $position->name;
+        $candidateRequest->subadmin_id = $request->party;
+        $candidateRequest->division_id = auth()->user()->division_id;
+        $candidateRequest->district_id = auth()->user()->district_id;
+        $candidateRequest->upazilla_id = auth()->user()->upazilla_id;
+        $candidateRequest->union_id = auth()->user()->union_id;
+        $candidateRequest->rmo_id = auth()->user()->rmo_id;
+        $candidateRequest->constituencies_id = auth()->user()->constituencies_id;
+        $candidateRequest->save();
+
     }
 
     /**

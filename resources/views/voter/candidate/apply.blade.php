@@ -18,6 +18,15 @@
       <hr class="mb-4">  
       <div class="row">
           <div class="col-md-6 mb-3">
+            <label for="election">Election</label>
+              <select name="election" id="election" class="form-control" >
+                @foreach($eletions as $eletion)
+                  <option value="{{ $eletion->id }}">{{ $eletion->election_type }}</option>
+                @endforeach
+              </select>
+          </div>
+
+          <div class="col-md-6 mb-3">
               {{Form::label('election_type', 'Election Type')}}
               {{ Form::select('election_type',[ '0' => 'Select', 'Perlament'=>'Perlament','City'=>'City','Union'=>'Union'], null,['class' => 'form-control']) }}
           </div>
