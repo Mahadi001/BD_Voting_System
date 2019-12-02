@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\BirthCertificate;
 
 class VoteController extends Controller
 {
@@ -13,7 +14,7 @@ class VoteController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:admin');
+        $this->middleware('auth:admin', ['except' => ['show']]);
     }
     /**
      * Display a listing of the resource.
@@ -54,7 +55,9 @@ class VoteController extends Controller
      */
     public function show($id)
     {
-        //
+        $corrections = BirthCertificate::where('bid', auth()->user()->bid )->first();
+        // $view = BirthCertificate::find($id);
+        return view('voter.candidates', compact('corrections'));
     }
 
     /**
@@ -87,6 +90,11 @@ class VoteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
+    {
+        //
+    }
+
+    public function view($id)
     {
         //
     }

@@ -56,9 +56,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('results') }}">Results</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('candidates') }}">Candidates</a>
-                        </li>
 
                         <!-- Authentication Links -->
                         @guest
