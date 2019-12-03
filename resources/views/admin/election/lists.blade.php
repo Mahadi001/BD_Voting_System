@@ -4,6 +4,7 @@
         <thead>
           <tr>
             <th scope="col">#</th>
+            <th scope="col">Name</th>
             <th scope="col">Election Type</th>
             <th scope="col">Date</th>
             <th scope="col">Starting Time</th>
@@ -16,6 +17,7 @@
             @foreach ($elections as $election)
                 <tr>
                     <th scope="row">1</th>
+                    <td>{{$election->name}}</td>
                     <td>{{$election->election_type}}</td>
                     <td>{{$election->date}}</td>
                     <td>{{$election->start}}</td>

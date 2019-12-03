@@ -10,9 +10,16 @@
         <div class="col-md-12 order-md-1">
         {!! Form::open(['action' => 'CandidateController@store', 'method' => 'POST']) !!} 
         
-      <div class="mb-3">
-        {{Form::label('date', 'Date')}}
-        {{ Form::date('date', null,['class' => 'form-control']) }}
+      
+      <div class="row">
+        <div class="col-md-6 mb-3">
+            {{Form::label('name', 'Name')}}
+            {{ Form::text('name', null,['class' => 'form-control']) }}
+        </div>
+        <div class="col-md-6 mb-3">
+            {{Form::label('date', 'Date')}}
+            {{ Form::date('date', null,['class' => 'form-control']) }}
+          </div>
       </div>
       <div class="row">
           <div class="col-md-6 mb-3">
@@ -157,6 +164,7 @@
 
             $("#store").click( function () {
                 console.log(storeData);
+                var name = $("#name").val();
                 var election_type = $("#election_type").val();
                 var date = $("#date").val();
                 var start = $("#start").val();
@@ -164,7 +172,7 @@
                 $.ajax({
                     type: "POST",
                     url: "{{route('election.store')}}",
-                    data: { election_type: election_type, date: date, start: start, end: end, details: storeData, _token: '{{ csrf_token() }}' },
+                    data: { name: name, election_type: election_type, date: date, start: start, end: end, details: storeData, _token: '{{ csrf_token() }}' },
                     beforeSend: function() {
                         
                     }

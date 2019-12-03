@@ -10,6 +10,8 @@ use App\Union;
 use App\Rmo;
 use App\Constituencies;
 use App\Position;
+use App\Election;
+use App\ElectionDetail;
 
 class AjaxController extends Controller
 {
@@ -217,6 +219,53 @@ class AjaxController extends Controller
             $positions .= '<option value="'. $value->id .'" >'. $value->name .'</option>';
         }
         return $positions;
+    }
+
+    public function election_to_position(Request $request){
+        $eletion = Election::with('details')->find($request->election);
+        $positions = '<option value="" >select</option>';
+        foreach($eletion->details as $value){
+            $positions .= '<option value="'. $value->position .'" data-edid="'. $value->id. '">'. $value->position_name .'</option>';
+        }
+        return $positions;
+    }
+
+
+    
+
+    public function election_detail_position_to_user_election_area(Request $request){
+
+
+        $electionDetails = ElectionDetail::find($request->edid);
+        $zone = unserialize($electionDetails->zone);
+
+        $electionArea = 'Not Available';
+        
+        if($electionDetails->zone_type == 'constituencies'){
+            if(in_array(auth()->user()->constituencies_id, $zone)){
+                $electionArea = Constituencies::find( auth()->user()->constituencies_id )->name;
+            }
+        }
+        elseif($electionDetails->zone_type == 'rmo'){
+            if(in_array(auth()->user()->rmo_id, $zone)){
+                $electionArea = Rmo::find( auth()->user()->rmo_id )->name;
+            }
+        }
+        elseif($electionDetails->zone_type == 'ward' ){
+            if(in_array(auth()->user()->union_id, $zone)){
+                $electionArea = Union::find( auth()->user()->union_id )->name;
+            }
+        }
+        elseif($electionDetails->zone_type == 'union'){
+            if( Rmo::find( auth()->user()->rmo_id )->type  == 'polli' ){
+                if(in_array(auth()->user()->union_id, $zone)){
+                    $electionArea = Union::find( auth()->user()->union_id )->name;
+                }
+            }
+        }
+
+        return $electionArea;
+
     }
 
     public function election_type_position_to_user_election_area(Request $request){

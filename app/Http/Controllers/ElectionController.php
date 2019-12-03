@@ -50,27 +50,28 @@ class ElectionController extends Controller
     public function store(Request $request)
     {
         $election = new Election;
-    $election->election_type = $request->election_type;
-    $election->date = $request->date;
-    $election->start = $request->start;
-    $election->end = $request->end;
-    $election->save();
-    
-    foreach($request->details as $detail){
+        $election->name = $request->name;
+        $election->election_type = $request->election_type;
+        $election->date = $request->date;
+        $election->start = $request->start;
+        $election->end = $request->end;
+        $election->save();
+        
+        foreach($request->details as $detail){
 
-        $postion = Position::find($detail['position_id']);
+            $postion = Position::find($detail['position_id']);
 
-        $electionDetail = new ElectionDetail;
-        $electionDetail->election_id = $election->id;
-        $electionDetail->position = $postion->id;
-        $electionDetail->position_name = $postion->name;
-        $electionDetail->zone_type = $postion->range;
-        $electionDetail->zone = serialize( $detail['zone_id'] );
-        $electionDetail->save();
+            $electionDetail = new ElectionDetail;
+            $electionDetail->election_id = $election->id;
+            $electionDetail->position = $postion->id;
+            $electionDetail->position_name = $postion->name;
+            $electionDetail->zone_type = $postion->range;
+            $electionDetail->zone = serialize( $detail['zone_id'] );
+            $electionDetail->save();
 
-    }
+        }
 
-    return $election;
+        return $election;
     }
 
     /**

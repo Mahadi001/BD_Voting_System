@@ -69,6 +69,39 @@ class CandidateController extends Controller
         //return date('Y-m-d');
         $eletions = Election::with('details')->where('date', '>', date('Y-m-d') )->get();
 
+        foreach($eletions as $i=>$eletion){
+            foreach($eletion->details as $key=>$details){
+                if($details->zone_type == 'constituencies'){
+                    $zone = unserialize($details->zone);
+                    if(!in_array(auth()->user()->constituencies_id, $zone)){
+                        unset($eletion->details[$key]);
+                    }
+                }
+                elseif($details->zone_type == 'rmo'){
+                    $zone = unserialize($details->zone);
+                    if(!in_array(auth()->user()->rmo_id, $zone)){
+                        unset($eletion->details[$key]);
+                    }
+                }
+                elseif($details->zone_type == 'ward' ){
+                    $zone = unserialize($details->zone);
+                    if(!in_array(auth()->user()->union_id, $zone)){
+                        unset($eletion->details[$key]);
+                    }
+                }
+                elseif($details->zone_type == 'union'){
+                    if( Rmo::find( auth()->user()->rmo_id )->type  != 'polli' ){
+                        $zone = unserialize($details->zone);
+                        if(!in_array(auth()->user()->union_id, $zone)){
+                            unset($eletion->details[$key]);
+                        }
+                    }
+                }
+            }
+            if($eletion->details == '[]'){
+                unset($eletions[$i]);
+            }
+        }
 
         return view('voter.candidate.apply', compact('birthCert','parties','eletions'));
     }
@@ -82,13 +115,27 @@ class CandidateController extends Controller
     public function store(Request $request)
     {
         //return $request->all();
+
+        // $this->validate($request->all(),[
+
+        // ]);
+        $check = CandidateRequest::where([
+            ['election_id',$request->election],
+            ['user_id',auth()->user()->id]
+        ])->count();
+        if($check>0){
+            return redirect()->back()->withError('you\'re already apllyed');
+        }
+
         $position = Position::find($request->position);
+        $election = Election::find($request->election);
 
         $candidateRequest = new CandidateRequest;
         $candidateRequest->fullname = $request->fullname;
         $candidateRequest->user_id = auth()->user()->id;
-        //$candidateRequest->election_id = $request->;
-        $candidateRequest->election_type = $request->election_type;
+        $candidateRequest->election_id = $request->election;
+        $candidateRequest->election_type = $election->election_type;
+        $candidateRequest->election_detail = $request->election_detail;
         $candidateRequest->position_id = $request->position;
         $candidateRequest->position_name = $position->name;
         $candidateRequest->subadmin_id = $request->party;
@@ -99,6 +146,8 @@ class CandidateController extends Controller
         $candidateRequest->rmo_id = auth()->user()->rmo_id;
         $candidateRequest->constituencies_id = auth()->user()->constituencies_id;
         $candidateRequest->save();
+
+        return redirect()->back()->with('success', 'successfully apllyed');
 
     }
 

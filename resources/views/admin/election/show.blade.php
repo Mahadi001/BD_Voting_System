@@ -15,11 +15,20 @@
 
 
       <div class="row">
-        <div class="col-md-12 order-md-1">        
-      <div class="mb-3">
-        {{Form::label('date', 'Date')}}
-        {{Form::text('date', $election->date, ['class' => 'form-control'])}}
+        <div class="col-md-12 order-md-1"> 
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+            {{Form::label('name', 'Name')}}
+            {{ Form::text('name', $election->name,['class' => 'form-control']) }}
+        </div>
+        <div class="col-md-6 mb-3">
+            {{Form::label('date', 'Date')}}
+            {{ Form::date('date', $election->date,['class' => 'form-control']) }}
+          </div>
       </div>
+
+
       <div class="row">
           <div class="col-md-6 mb-3">
               {{Form::label('start', 'Start Time')}}

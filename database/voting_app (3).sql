@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 02, 2019 at 07:24 PM
+-- Generation Time: Dec 03, 2019 at 04:32 AM
 -- Server version: 8.0.18-0ubuntu0.19.10.1
 -- PHP Version: 7.3.11-0ubuntu0.19.10.1
 
@@ -101,8 +101,9 @@ CREATE TABLE `candidates` (
   `user_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'candidate id',
   `election_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `election_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `election_detail` int(11) NOT NULL,
   `position_id` int(11) NOT NULL,
-  `position_name` int(11) NOT NULL,
+  `position_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `subadmin_id` int(11) NOT NULL COMMENT 'party id',
   `division_id` int(11) NOT NULL,
   `district_id` int(11) NOT NULL,
@@ -126,8 +127,9 @@ CREATE TABLE `candidate_requests` (
   `user_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'candidate id',
   `election_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `election_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `election_detail` int(11) NOT NULL DEFAULT '0',
   `position_id` int(11) NOT NULL,
-  `position_name` int(11) NOT NULL,
+  `position_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `subadmin_id` int(11) NOT NULL COMMENT 'party id',
   `division_id` int(11) NOT NULL,
   `district_id` int(11) NOT NULL,
@@ -140,6 +142,14 @@ CREATE TABLE `candidate_requests` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `candidate_requests`
+--
+
+INSERT INTO `candidate_requests` (`id`, `fullname`, `user_id`, `election_id`, `election_type`, `election_detail`, `position_id`, `position_name`, `subadmin_id`, `division_id`, `district_id`, `upazilla_id`, `union_id`, `rmo_id`, `constituencies_id`, `approved_by_party`, `approved_by_ec`, `created_at`, `updated_at`) VALUES
+(1, 'user3first user3middle user3last', '5', '5', 'Perlament', 4, 1, 'Member of Parliament(MP)', 1, 3, 1, 1, 1, 1, 2, 0, 0, '2019-12-02 22:18:14', '2019-12-02 22:18:14'),
+(2, 'user3first user3middle user3last', '13', '5', 'Perlament', 4, 1, 'Member of Parliament(MP)', 1, 3, 1, 1, 1, 1, 2, 0, 0, '2019-12-02 22:27:09', '2019-12-02 22:27:09');
 
 -- --------------------------------------------------------
 
@@ -263,6 +273,7 @@ INSERT INTO `divisions` (`id`, `name`, `remember_token`, `created_at`, `updated_
 
 CREATE TABLE `elections` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `election_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` date NOT NULL,
   `start` time NOT NULL,
@@ -275,9 +286,10 @@ CREATE TABLE `elections` (
 -- Dumping data for table `elections`
 --
 
-INSERT INTO `elections` (`id`, `election_type`, `date`, `start`, `end`, `created_at`, `updated_at`) VALUES
-(5, 'Perlament', '2019-12-02', '01:00:00', '02:00:00', '2019-12-01 23:34:56', '2019-12-01 23:34:56'),
-(7, 'City', '2019-12-03', '01:00:00', '02:00:00', '2019-12-01 23:45:43', '2019-12-01 23:45:43');
+INSERT INTO `elections` (`id`, `name`, `election_type`, `date`, `start`, `end`, `created_at`, `updated_at`) VALUES
+(5, 'Perlament Election 2019', 'Perlament', '2019-12-04', '01:00:00', '02:00:00', '2019-12-01 23:34:56', '2019-12-01 23:34:56'),
+(7, 'City Eleciton 2019', 'City', '2019-12-05', '01:00:00', '02:00:00', '2019-12-01 23:45:43', '2019-12-01 23:45:43'),
+(8, 'Union Election 2019', 'Union', '2019-12-06', '01:00:00', '02:00:00', '2019-12-02 20:44:39', '2019-12-02 20:44:39');
 
 -- --------------------------------------------------------
 
@@ -303,7 +315,8 @@ CREATE TABLE `election_details` (
 INSERT INTO `election_details` (`id`, `election_id`, `position`, `position_name`, `zone_type`, `zone`, `created_at`, `updated_at`) VALUES
 (4, 5, 1, 'Member of Parliament(MP)', 'constituencies', 'a:2:{i:0;s:1:\"2\";i:1;s:1:\"3\";}', '2019-12-01 23:34:56', '2019-12-01 23:34:56'),
 (5, 7, 2, 'Mayor', 'rmo', 'a:1:{i:0;s:1:\"1\";}', '2019-12-01 23:45:43', '2019-12-01 23:45:43'),
-(6, 7, 3, 'Commissioner ', 'ward', 'a:2:{i:0;s:1:\"1\";i:1;s:1:\"2\";}', '2019-12-01 23:45:43', '2019-12-01 23:45:43');
+(6, 7, 3, 'Commissioner ', 'ward', 'a:2:{i:0;s:1:\"1\";i:1;s:1:\"2\";}', '2019-12-01 23:45:43', '2019-12-01 23:45:43'),
+(7, 8, 4, 'Chairman', 'union', 'a:2:{i:0;s:1:\"3\";i:1;s:1:\"4\";}', '2019-12-02 20:44:39', '2019-12-02 20:44:39');
 
 -- --------------------------------------------------------
 
@@ -642,8 +655,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `bid`, `nid`, `name`, `telephone`, `password`, `remember_token`, `created_at`, `updated_at`, `division_id`, `district_id`, `upazilla_id`, `union_id`, `rmo_id`, `constituencies_id`) VALUES
-(5, 1234567893, '1112222', 'Ali Imtiaz Jamil', NULL, '$2y$10$AExI8okSBCquGtmT3/gc/eZtNoteGMMTKvq2imBI4D42BudvDkBTK', NULL, '2019-12-01 08:15:05', '2019-12-01 08:15:05', 3, 1, 1, 1, 1, 1),
-(12, 1234567892, '3994932619', 'Ali Imtiaz Jamil', '345', '$2y$10$9Kgy6dmXVna78WNnUSiTkOEr5h72vfKtk14Apu9DMalixxelBI9be', NULL, '2019-12-01 10:18:43', '2019-12-01 10:18:43', 3, 9, 5, 9, 3, 3);
+(5, 1234567893, '1112222', 'Ali Imtiaz Jamil', NULL, '$2y$10$AExI8okSBCquGtmT3/gc/eZtNoteGMMTKvq2imBI4D42BudvDkBTK', NULL, '2019-12-01 08:15:05', '2019-12-01 08:15:05', 3, 1, 1, 1, 1, 2),
+(12, 1234567892, '3994932619', 'ttt', '345', '$2y$10$9Kgy6dmXVna78WNnUSiTkOEr5h72vfKtk14Apu9DMalixxelBI9be', NULL, '2019-12-01 10:18:43', '2019-12-01 10:18:43', 3, 9, 5, 9, 3, 3),
+(13, 1234567893, '3994932618', 'sfsf', '345', '$2y$10$9Kgy6dmXVna78WNnUSiTkOEr5h72vfKtk14Apu9DMalixxelBI9be', NULL, '2019-12-01 10:18:43', '2019-12-01 10:18:43', 3, 1, 1, 1, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -836,7 +850,7 @@ ALTER TABLE `candidates`
 -- AUTO_INCREMENT for table `candidate_requests`
 --
 ALTER TABLE `candidate_requests`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `constituencies`
@@ -866,13 +880,13 @@ ALTER TABLE `divisions`
 -- AUTO_INCREMENT for table `elections`
 --
 ALTER TABLE `elections`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `election_details`
 --
 ALTER TABLE `election_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `election_types`
@@ -938,7 +952,7 @@ ALTER TABLE `upazillas`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `votes`

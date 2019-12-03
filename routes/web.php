@@ -65,11 +65,16 @@ Route::get('/admin/election/show/{id}', 'ElectionController@show')->name('electi
 
 
 Route::get('/election_type_to_position', 'AjaxController@election_type_to_position')->name('election_type_to_position');
+Route::get('/election_to_position', 'AjaxController@election_to_position')->name('election_to_position');
 Route::get('/city_to_ward', 'AjaxController@city_to_ward')->name('city_to_ward');
 Route::get('/election_type_position_to_zone', 'AjaxController@election_type_position_to_zone')->name('election_type_position_to_zone');
 
 Route::get('/election_type_position_to_user_election_area', 'AjaxController@election_type_position_to_user_election_area')
         ->name('election_type_position_to_user_election_area')
+        ->middleware('auth:web');
+
+Route::get('/election_detail_position_to_user_election_area', 'AjaxController@election_detail_position_to_user_election_area')
+        ->name('election_detail_position_to_user_election_area')
         ->middleware('auth:web');
 
 
