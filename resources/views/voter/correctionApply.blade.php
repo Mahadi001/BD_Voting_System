@@ -1,9 +1,9 @@
-@extends('layouts.admin')
-@section('admin-content')
+@extends('layouts.user')
+@section('user-content')
 
 <div class="container">
       <div class="py-5 text-center">
-        <h2>Edit Birth Certificate form</h2>
+        <h2>Apply for Correction Birth Certificate</h2>
         <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
       </div>
       <div class=" mb-3">
@@ -12,7 +12,7 @@
       </div>
       <div class="row">
         <div class="col-md-12 order-md-1">
-        {!! Form::open(['route' => ['certificate.update',$certificate->id], 'method' => 'PUT', 'id'=>'form']) !!} 
+        {!! Form::open(['route' => ['correction.apply'], 'method' => 'POST', 'id'=>'form']) !!} 
         <hr class="mb-4">
         <div class="row">
         <div class="col-md-4 mb-3">

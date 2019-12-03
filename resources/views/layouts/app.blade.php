@@ -23,10 +23,10 @@
 <body>
     <div id="app">
         <nav class="
-    navbar navbar-expand-md navbar-light shadow-sm 
-    @if(auth()->guard('admin')->check() ) {{'bg-primary color-white'}} 
-    @elseif (auth()->guard('subAdmin')->check() ) {{'bg-success color-white'}} 
-    @else {{'bg-white'}} 
+    navbar navbar-expand-md shadow-sm 
+    @if(auth()->guard('admin')->check() ) {{'navbar-dark bg-primary'}} 
+    @elseif (auth()->guard('subAdmin')->check() ) {{'navbar-dark bg-success'}} 
+    @else {{'navbar-light'}} 
     @endif">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">

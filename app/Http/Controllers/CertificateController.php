@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\BirthCertificate;
+use App\Divisions;
+use App\User;
 
 class CertificateController extends Controller
 {
@@ -37,7 +39,8 @@ class CertificateController extends Controller
      */
     public function create()
     {
-        return view('admin.certificate.create');
+        $divisions = Divisions::all();
+        return view('admin.certificate.create',compact('divisions'));
     }
 
     /**
@@ -48,8 +51,8 @@ class CertificateController extends Controller
      */
     public function store(Request $request)
     {
+        //return $request->all();
         $this->validate($request, [
-            'bid' => 'required',
             'fname' => 'required',
             'mname' => 'required',
             'lname' => 'required',
@@ -65,14 +68,11 @@ class CertificateController extends Controller
             'mobile' => 'required',
             'emergencyContact' => 'required',
             'address' => 'required',
-            'address2' => 'required',
-            'country' => 'required',
-            'state' => 'required',
-            'zip' => 'required'
+            'address2' => 'required'
         ]);
 
         $certificate = new BirthCertificate;
-        $certificate->bid = $request->input('bid');
+        $certificate->bid = rand(111111111, 999999999);
         $certificate->fname = $request->input('fname');
         $certificate->mname = $request->input('mname');
         $certificate->lname = $request->input('lname');
@@ -89,11 +89,17 @@ class CertificateController extends Controller
         $certificate->emergencyContact = $request->input('emergencyContact');
         $certificate->address = $request->input('address');
         $certificate->address2 = $request->input('address2');
-        $certificate->country = $request->input('country');
-        $certificate->state = $request->input('state');
-        $certificate->zip = $request->input('zip');
+        
+        $certificate->division_id = $request->division;
+        $certificate->district_id = $request->district;
+        $certificate->upazilla_id = $request->upazilla;
+        $certificate->union_id = $request->unionORward;
+        $certificate->rmo_type = $request->rmo;
+        $certificate->rmo_id = $request->municipality;
+        $certificate->constituencies_id = $request->constituencies_id;
+
         $certificate->save();
-        return redirect('/certificate')->with('success', 'Birth Certificate Created');
+        return redirect()->back()->with('success', 'Birth Certificate Created');
     }
 
     /**
@@ -116,8 +122,9 @@ class CertificateController extends Controller
      */
     public function edit($id)
     {
-        $certificate = BirthCertificate::find($id);
-        return view('admin.certificate.edit')->with('certificate', $certificate);
+        $divisions = Divisions::all();
+        $certificate = BirthCertificate::with(['district','upazilla','rmo','union'])->find($id);
+        return view('admin.certificate.edit', compact('certificate','divisions'));
     }
 
     /**
@@ -129,8 +136,8 @@ class CertificateController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //return $request->all();
         $this->validate($request, [
-            'bid' => 'required',
             'fname' => 'required',
             'mname' => 'required',
             'lname' => 'required',
@@ -146,14 +153,10 @@ class CertificateController extends Controller
             'mobile' => 'required',
             'emergencyContact' => 'required',
             'address' => 'required',
-            'address2' => 'required',
-            'country' => 'required',
-            'state' => 'required',
-            'zip' => 'required'
+            'address2' => 'required'
         ]);
 
         $certificate = BirthCertificate::find($id);
-        $certificate->bid = $request->input('bid');
         $certificate->fname = $request->input('fname');
         $certificate->mname = $request->input('mname');
         $certificate->lname = $request->input('lname');
@@ -170,11 +173,29 @@ class CertificateController extends Controller
         $certificate->emergencyContact = $request->input('emergencyContact');
         $certificate->address = $request->input('address');
         $certificate->address2 = $request->input('address2');
-        $certificate->country = $request->input('country');
-        $certificate->state = $request->input('state');
-        $certificate->zip = $request->input('zip');
+        
+        $certificate->division_id = $request->division;
+        $certificate->district_id = $request->district;
+        $certificate->upazilla_id = $request->upazilla;
+        $certificate->union_id = $request->unionORward;
+        $certificate->rmo_type = $request->rmo;
+        $certificate->rmo_id = $request->municipality;
+        $certificate->constituencies_id = $request->constituencies_id;
+
         $certificate->save();
-        return redirect('/certificate')->with('success', 'Birth Certificate Updated');
+
+        $user = User::where('bid',$correction->bid)->first();
+        if($user){
+            $user->division_id = $request->division;
+            $user->district_id = $request->district;
+            $user->upazilla_id = $request->upazilla;
+            $user->union_id = $request->unionORward;
+            $user->rmo_id = $request->municipality;
+            $user->constituencies_id = $request->constituencies_id;
+            $user->save();
+        }
+        
+        return redirect()->back()->with('success', 'Birth Certificate Updated');
     }
 
     /**

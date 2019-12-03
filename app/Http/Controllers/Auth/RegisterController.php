@@ -7,6 +7,8 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\BirthCertificate;
+use App\Rules\CheckBidForRegister;
 
 class RegisterController extends Controller
 {
@@ -50,7 +52,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'bid' => ['required', 'integer'],
+            'bid' => ['required', 'integer', new CheckBidForRegister],
             'telephone' => ['required', 'string', 'max:30', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -64,12 +66,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $certificate = BirthCertificate::where('bid',$data['bid'])->first();
         return User::create([
             'name' => $data['name'],
             'bid' => $data['bid'],
             'nid' => rand(1111111111, 9999999999),
             'telephone' => $data['telephone'],
             'password' => Hash::make($data['password']),
+            'division_id' => $certificate->division_id,
+            'district_id' => $certificate->district_id,
+            'upazilla_id' => $certificate->upazilla_id,
+            'union_id' => $certificate->union_id,
+            'rmo_id' => $certificate->rmo_id,
+            'constituencies_id' => $certificate->constituencies_id,
         ]);
     }
 

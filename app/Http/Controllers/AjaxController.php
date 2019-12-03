@@ -131,21 +131,23 @@ class AjaxController extends Controller
         ])->get();
     
         $rmoHtml = '';
+        $unionsHtmls = '<option value="0" >select Union</option>';
         if($unions != '[]' ){
             $rmo = $unions->unique('rmo')->pluck('rmo');
-            $rmoHtml = '<select name="municipality" id="municipality" >';
+            $rmoHtml = '';
             foreach($rmo as $value){
                 $rmoHtml .= '<option value="'. $value->id .'" >'. $value->name .'</option>';
             }
-            $rmoHtml .= '</select>';
-        }
-        
-        $unionsHtmls = '<option value="0" >select Union</option>';
-        foreach($unions as $value){
-            $unionsHtmls .= '<option value="'. $value->id .'" >'. $value->name .'</option>';
+            foreach($unions as $value){
+                $unionsHtmls .= '<option value="'. $value->id .'" >'. $value->name .'</option>';
+            }
         }
     
         return compact('unionsHtmls', 'rmoHtml');
+    }
+
+    public function union_to_constituencies(Request $request){
+        return $union = Union::find($request->union)->constituencies_id;
     }
 
     public function election_type_position_to_zone(Request $request){

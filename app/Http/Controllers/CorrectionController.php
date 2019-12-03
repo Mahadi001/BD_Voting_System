@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\BirthCertificate;
 use App\Correction;
 use App\Pending;
+use App\Divisions;
+use App\User;
 
 class CorrectionController extends Controller
 {
@@ -17,7 +19,8 @@ class CorrectionController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:admin', ['except' => ['view', 'edit']]);
+        $this->middleware('auth:admin', ['only' => ['index','approved']]);
+        $this->middleware('auth:web', ['only' => ['apply', 'view']]);
     }
     
     /**
@@ -27,21 +30,121 @@ class CorrectionController extends Controller
      */
     public function index()
     {
-        $pendings = Pending::get();
-        return view('voter.correction.admin-lists', compact('pendings'));
+        $corrections = Correction::all();
+        return view('admin.correction.lists', compact('corrections'));
     }
+
+    public function show($id)
+    {
+        $certificate = Correction::find($id);
+        return view('admin.correction.show', compact('certificate'));
+    }
+
+    public function approved(Request $request,$correction_id){
+        
+        $correction = Correction::find($correction_id);
+
+        $certificate = BirthCertificate::where('bid', $correction->bid)->first();
+        $certificate->fname = $correction->fname;
+        $certificate->mname = $correction->mname;
+        $certificate->lname = $correction->lname;
+        $certificate->birthPlace = $correction->birthPlace;
+        $certificate->birthCountry = $correction->birthCountry;
+        $certificate->dateOfBirth = $correction->dateOfBirth;
+        $certificate->fathername = $correction->fathername;
+        $certificate->mothername = $correction->mothername;
+        $certificate->height = $correction->height;
+        $certificate->eyesColor = $correction->eyesColor;
+        $certificate->sex = $correction->sex;
+        $certificate->telephone = $correction->telephone;
+        $certificate->mobile = $correction->mobile;
+        $certificate->emergencyContact = $correction->emergencyContact;
+        $certificate->address = $correction->address;
+        $certificate->address2 = $correction->address2;
+        
+        $certificate->division_id = $correction->division_id;
+        $certificate->district_id = $correction->district_id;
+        $certificate->upazilla_id = $correction->upazilla_id;
+        $certificate->union_id = $correction->union_id;
+        $certificate->rmo_type = $correction->rmo_type;
+        $certificate->rmo_id = $correction->rmo_id;
+        $certificate->constituencies_id = $correction->constituencies_id;
+        $certificate->save();
+
+        
+        $user = User::where('bid',$correction->bid)->first();
+        $user->division_id = $correction->division_id;
+        $user->district_id = $correction->district_id;
+        $user->upazilla_id = $correction->upazilla_id;
+        $user->union_id = $correction->union_id;
+        $user->rmo_id = $correction->rmo_id;
+        $user->constituencies_id = $correction->constituencies_id;
+        $user->save();
+
+        $correction->delete();
+
+        return redirect( route('correction.index') )->with('success', 'Birth Certificate Correction Approved');
+
+
+
+
+    }
+
+    public function view()
+    {
+        $divisions = Divisions::all();
+        $certificate = BirthCertificate::with(['district','upazilla','rmo','union'])->where('bid', auth()->user()->bid )->first();
+        return view('voter.correctionApply', compact('certificate','divisions'));
+    }
+
+    public function apply(Request $request){
+        //return $request->all();
+        if(Correction::where('bid', auth()->user()->bid)->count() > 0 ){
+            return redirect()->back()->withError('You have already applyed for correction');
+        }
+        $certificate = new Correction;
+        $certificate->bid = auth()->user()->bid;
+        $certificate->fname = $request->input('fname');
+        $certificate->mname = $request->input('mname');
+        $certificate->lname = $request->input('lname');
+        $certificate->birthPlace = $request->input('birthPlace');
+        $certificate->birthCountry = $request->input('birthCountry');
+        $certificate->dateOfBirth = $request->input('dateOfBirth');
+        $certificate->fathername = $request->input('fathername');
+        $certificate->mothername = $request->input('mothername');
+        $certificate->height = $request->input('height');
+        $certificate->eyesColor = $request->input('eyesColor');
+        $certificate->sex = $request->input('sex');
+        $certificate->telephone = $request->input('telephone');
+        $certificate->mobile = $request->input('mobile');
+        $certificate->emergencyContact = $request->input('emergencyContact');
+        $certificate->address = $request->input('address');
+        $certificate->address2 = $request->input('address2');
+        
+        $certificate->division_id = $request->division;
+        $certificate->district_id = $request->district;
+        $certificate->upazilla_id = $request->upazilla;
+        $certificate->union_id = $request->unionORward;
+        $certificate->rmo_type = $request->rmo;
+        $certificate->rmo_id = $request->municipality;
+        $certificate->constituencies_id = $request->constituencies_id;
+
+        $certificate->save();
+
+        // update user next time
+
+        return redirect()->back()->with('success', 'Birth Certificate Correction applyed');
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function view($id)
-    {
-        $corrections = BirthCertificate::find($id);
-        $view = BirthCertificate::find($id);
-        return view('voter.correction.view', compact('view', 'corrections'));
-    }
+    
+   
 
     /**
      * Store a newly created resource in storage.
@@ -105,11 +208,7 @@ class CorrectionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        $pending = Pending::find($id);
-        return view('voter.correction.admin-show', compact('pending'));
-    }
+    
 
     /**
      * Show the form for editing the specified resource.

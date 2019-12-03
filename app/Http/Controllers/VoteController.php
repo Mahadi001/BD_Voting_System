@@ -4,6 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\BirthCertificate;
+use App\Political_Parties;
+use App\Divisions;
+use App\Districts;
+use App\Upazilla;
+use App\Union;
+use App\Rmo;
+use App\Constituencies;
+use App\SubAdmin;
+use App\CandidateRequest;
+use App\Position;
+use App\Election;
+use App\Vote;
 
 class VoteController extends Controller
 {
@@ -14,8 +26,70 @@ class VoteController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:admin', ['except' => ['show']]);
+        $this->middleware('auth:admin', ['only' => ['show']]);
+        $this->middleware('auth:web', ['only' => ['voteList','votePlace']]);
     }
+
+
+    public function voteList(){
+
+        $eletions = Election::with([
+            'details', 
+            'details.candidates', 
+            'details.candidates.party'
+        ])->where('date', '>', date('Y-m-d') )->get();
+
+        foreach($eletions as $i=>$eletion){
+            foreach($eletion->details as $key=>$details){
+                if($details->zone_type == 'constituencies'){
+                    $zone = unserialize($details->zone);
+                    if(!in_array(auth()->user()->constituencies_id, $zone)){
+                        unset($eletion->details[$key]);
+                    }
+                }
+                elseif($details->zone_type == 'rmo'){
+                    $zone = unserialize($details->zone);
+                    if(!in_array(auth()->user()->rmo_id, $zone)){
+                        unset($eletion->details[$key]);
+                    }
+                }
+                elseif($details->zone_type == 'ward' ){
+                    $zone = unserialize($details->zone);
+                    if(!in_array(auth()->user()->union_id, $zone)){
+                        unset($eletion->details[$key]);
+                    }
+                }
+                elseif($details->zone_type == 'union'){
+                    if( Rmo::find( auth()->user()->rmo_id )->type  != 'polli' ){
+                        $zone = unserialize($details->zone);
+                        if(!in_array(auth()->user()->union_id, $zone)){
+                            unset($eletion->details[$key]);
+                        }
+                    }
+                }
+            }
+            if($eletion->details == '[]'){
+                unset($eletions[$i]);
+            }
+        }
+        //return $eletions;
+
+        return view('voter.vote.election', compact('eletions'));
+    }
+
+    public function votePlace(Request $request){
+        
+        $vote = new Vote;
+        $vote->user_id = auth()->user()->id;
+        $vote->candidate_id = $request->candidate;
+        $vote->election_id = $request->election;
+        $vote->election_detail_id = $request->election_detail;
+        $vote->position_id = $request->position_id;
+        $vote->subadmin_id = $request->subadmin_id;
+        $vote->save();
+        return redirect()->back()->with('success', 'successfully vote');
+    }
+
     /**
      * Display a listing of the resource.
      *

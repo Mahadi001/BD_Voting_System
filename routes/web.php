@@ -17,12 +17,33 @@
 
 Auth::routes();
 
-Route::resource('certificate', 'CertificateController');
+//Route::resource('certificate', 'CertificateController');
+Route::get('/admin/certificate', 'CertificateController@index')->name('certificate.index');
+Route::get('/admin/certificate/create', 'CertificateController@create')->name('certificate.create');
+Route::post('/admin/certificate', 'CertificateController@store')->name('certificate.store');
+Route::get('/admin/certificate/{id}', 'CertificateController@show')->name('certificate.show');
+Route::get('/admin/certificate/{id}/edit', 'CertificateController@edit')->name('certificate.edit');
+Route::put('/admin/certificate/{id}', 'CertificateController@update')->name('certificate.update');
+Route::delete('/admin/certificate/{id}', 'CertificateController@destroy')->name('certificate.destroy');
 
-Route::resource('correction', 'CorrectionController');
-Route::get('/correction/{correction}/view', 'CorrectionController@view')->name('user.view');
 
-Route::resource('vote', 'VoteController');
+//Route::resource('correction', 'CorrectionController');
+Route::get('/admin/correction', 'CorrectionController@index')->name('correction.index');
+Route::get('/admin/correction/{id}', 'CorrectionController@show')->name('correction.show');
+Route::delete('/admin/correction/{id}', 'CorrectionController@destroy')->name('correction.destroy');
+Route::post('/admin/correction/{id}/approved', 'CorrectionController@approved')->name('correction.approved');
+// Route::get('/admin/correction/create', 'CorrectionController@create')->name('correction.create');
+// Route::post('/admin/correction', 'CorrectionController@store')->name('correction.store');
+// Route::get('/admin/correction/{id}/edit', 'CorrectionController@edit')->name('correction.edit');
+// Route::put('/admin/correction/{id}', 'CorrectionController@update')->name('correction.update');
+
+Route::get('/correction_apply', 'CorrectionController@view')->name('correction.view');
+Route::post('/correction_apply', 'CorrectionController@apply')->name('correction.apply');
+
+//Route::resource('vote', 'VoteController');
+Route::get('/vote', 'VoteController@voteList')->name('vote.list')->middleware('auth:web');
+Route::post('/vote', 'VoteController@votePlace')->name('vote.place')->middleware('auth:web');
+
 
 Route::resource('candidate', 'CandidateController');
 Route::get('/candidate_apply', 'CandidateController@apply')->name('user.apply')->middleware('auth:web');
@@ -68,6 +89,8 @@ Route::get('/election_type_to_position', 'AjaxController@election_type_to_positi
 Route::get('/election_to_position', 'AjaxController@election_to_position')->name('election_to_position');
 Route::get('/city_to_ward', 'AjaxController@city_to_ward')->name('city_to_ward');
 Route::get('/election_type_position_to_zone', 'AjaxController@election_type_position_to_zone')->name('election_type_position_to_zone');
+
+Route::get('/union_to_constituencies', 'AjaxController@union_to_constituencies')->name('union_to_constituencies');
 
 Route::get('/election_type_position_to_user_election_area', 'AjaxController@election_type_position_to_user_election_area')
         ->name('election_type_position_to_user_election_area')

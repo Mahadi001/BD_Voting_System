@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.admin')
 @section('admin-content')
 
 <div class="container">
@@ -10,11 +10,7 @@
       
       <div class="row">
         <div class="col-md-12 order-md-1">
-        {!! Form::open(['action' => 'CertificateController@store', 'method' => 'POST']) !!} 
-        <div class="mb-3">
-          {{Form::label('bid', 'Birth Certificate Id')}}
-          {{Form::text('bid', '', ['class' => 'form-control', 'placeholder' => 'Birth Certificate Id'])}}
-        </div>
+        {!! Form::open(['action' => 'CertificateController@store', 'method' => 'POST', 'id'=>'form']) !!} 
         <hr class="mb-4">
         <div class="row">
         <div class="col-md-4 mb-3">
@@ -107,19 +103,56 @@
       </div>
 
       <div class="row">
+
         <div class="col-md-4 mb-3">
-          {{Form::label('country', 'Country')}}
-          {{Form::select('country', ['B' => 'Bangladesh'], null, ['class' => 'form-control', 'placeholder' => 'Choose'])}}
+            <label for="division">Division</label>
+            <select name="division" id="division" class="form-control">
+                <option value="" >select division</option>
+                @foreach($divisions as $division)
+                    <option value="{{$division->id}}"> {{$division->name}} </option>
+                @endforeach
+            </select>
         </div>
         <div class="col-md-4 mb-3">
-          {{Form::label('state', 'Country')}}
-          {{Form::select('state', ['D' => 'Dhaka'], null, ['class' => 'form-control', 'placeholder' => 'Choose'])}}
-        </div>
-        <div class="col-md-4 mb-3">
-          {{Form::label('zip', 'Zip code')}}
-          {{Form::text('zip', '', ['class' => 'form-control', 'placeholder' => 'zip'])}}
-        </div>
+          <label for="district">District</label>
+          <select name="district" id="district" class="form-control">
+              <option value="" >select district</option>
+          </select>
       </div>
+        <div class="col-md-4 mb-3">
+          <label for="upazilla">Upazilla</label>
+          <select name="upazilla" id="upazilla" class="form-control">
+              <option value="" >select upazilla</option>
+          </select>
+      </div>
+      
+      <div class="col-md-6 mb-3">
+          <label>RMO Type</label>
+          <div>
+              <div class="form-check form-check-inline">
+                  <input name="rmo" value="polli" id="polli" class="form-check-input" type="radio">
+                  <label class="form-check-label" for="polli">polli</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input name="rmo" value="city"  id="city" class="form-check-input" type="radio" >
+                  <label class="form-check-label" for="city">city</label>
+                </div>
+          </div>
+      </div>
+      <div class="col-md-6 mb-3">
+          <label>Selected RMO</label>
+          <select class="form-control" name="municipality" id="rmoOption" ></select>
+      </div>
+     
+      <div class="col-md-12 mb-3">
+          <label for="unionORward">Union/Ward</label>
+          <select name="unionORward" id="unionORward" class="form-control">
+              <option value="" >select union/ward</option>
+          </select>
+      </div>
+     
+      <input type="hidden" name="constituencies_id" value="" id="constituencies"/>
+
       <hr class="mb-4">
       {{Form::submit('Submit', ['class' => 'btn btn-primary col-md-2 col-xs-2 col1 center-block'])}}
       {!! Form::close() !!}
@@ -128,20 +161,78 @@
     </div>
 
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="../../assets/js/vendor/popper.min.js"></script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
-    <script src="../../assets/js/vendor/holder.min.js"></script>
     
-    <script type="text/javascript">
-      $(function () {
-          $('#datetimepicker4').datetimepicker();
+@endsection
+@push('script')
+<script>
+  $(document).ready(function () {
+      $("#division").change( function () {
+          var division = $(this).val();
+          $.ajax({
+              type: "GET",
+              url: "{{route('division_to_district')}}",
+              data: { division: division },
+              beforeSend: function(){
+                $("#district").html('');
+                $("#upazilla").html('');
+                $("#constituencies").val('');
+                $("#unionORward").html('');
+                $("#rmoOption").html('');
+                $("input[type=radio][name=rmo]").prop("checked", false);
+              }
+          }).done(function (data) {
+              console.log(data);
+              $("#district").html(data.districts);
+          });
+      
       });
+      $("#district").change( function () {
+          var district = $(this).val();
+          $.ajax({
+              type: "GET",
+              url: "{{route('district_to_upazilla')}}",
+              data: { district: district }
+          }).done(function (data) {
+              console.log(data);
+              $("#upazilla").html(data.upazila);
+          });
+      });
+      $("#unionORward").change( function () {
+          var union = $(this).val();
+          $.ajax({
+              type: "GET",
+              url: "{{route('union_to_constituencies')}}",
+              data: { union: union }
+          }).done(function (data) {
+              console.log(data);
+              $("#constituencies").val(data);
+          });
+      });
+
+      $("input[type=radio][name=rmo]").change( function () {
+          var rmo = $(this).val();
+          var division = $("#division").val();
+          var district = $("#district").val();
+          var upazila  = $("#upazilla").val();
+          
+          $.ajax({
+              type: "GET",
+              url: "{{route('division_district_upazilla_rmo_to_union')}}",
+              data: { division: division, district: district, upazila: upazila, rmo: rmo }
+          }).done(function (data) {
+              console.log(data);
+              $("#unionORward").html(data.unionsHtmls);
+              $("#rmoOption").html("");
+              if(data.rmoHtml){
+                  $("#rmoOption").html(data.rmoHtml);
+              }
+          });
+      });
+
+
+  });
   </script>
+
     <script>
       // Example starter JavaScript for disabling form submissions if there are invalid fields
       (function() {
@@ -164,5 +255,5 @@
         }, false);
       })();
     </script>
-@endsection
+@endpush
   
