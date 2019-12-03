@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\ElectionDetail;
 use App\Constituencies;
 use App\Position;
+use App\Rmo;
+use App\Union;
 
 class ElectionController extends Controller
 {
@@ -17,7 +19,7 @@ class ElectionController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:admin', ['only' => ['index', 'create']]);
+        $this->middleware('auth:admin', ['only' => ['index', 'create', 'show']]);
     }
 
     /**
@@ -83,6 +85,23 @@ class ElectionController extends Controller
     public function show($id)
     {
         $election = Election::with('details')->find($id);
+
+        
+            foreach($election->details as $key=>$details){
+                $zone = unserialize($details->zone);
+                if($details->zone_type == 'constituencies'){
+                   
+                    $details->zone = Constituencies::whereIn('id',$zone)->pluck('name');
+                    
+                }
+                elseif($details->zone_type == 'rmo'){
+                    $details->zone = Rmo::whereIn('id',$zone)->pluck('name');
+                }
+                elseif($details->zone_type == 'ward' || $details->zone_type == 'union'){
+                    $details->zone = Union::whereIn('id',$zone)->pluck('name');
+                }
+            }
+        
         return view('admin.election.show', compact('election'));
     }
 

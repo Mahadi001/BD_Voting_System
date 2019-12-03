@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 03, 2019 at 03:37 PM
+-- Generation Time: Dec 03, 2019 at 06:29 PM
 -- Server version: 8.0.18-0ubuntu0.19.10.1
 -- PHP Version: 7.3.11-0ubuntu0.19.10.1
 
@@ -118,6 +118,13 @@ CREATE TABLE `candidates` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `candidates`
+--
+
+INSERT INTO `candidates` (`id`, `fullname`, `user_id`, `election_id`, `election_type`, `election_detail`, `position_id`, `position_name`, `subadmin_id`, `division_id`, `district_id`, `upazilla_id`, `union_id`, `rmo_id`, `constituencies_id`, `created_at`, `updated_at`) VALUES
+(3, 'test testm testb', '15', '7', 'City', 5, 2, 'Mayor', 1, 3, 1, 1, 1, 1, 1, '2019-12-03 18:23:01', '2019-12-03 18:23:01');
+
 -- --------------------------------------------------------
 
 --
@@ -145,6 +152,13 @@ CREATE TABLE `candidate_requests` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `candidate_requests`
+--
+
+INSERT INTO `candidate_requests` (`id`, `fullname`, `user_id`, `election_id`, `election_type`, `election_detail`, `position_id`, `position_name`, `subadmin_id`, `division_id`, `district_id`, `upazilla_id`, `union_id`, `rmo_id`, `constituencies_id`, `approved_by_party`, `approved_by_ec`, `created_at`, `updated_at`) VALUES
+(5, 'test testm testb', '15', '7', 'City', 5, 2, 'Mayor', 1, 3, 1, 1, 1, 1, 1, 1, 1, '2019-12-03 17:56:31', '2019-12-03 18:23:01');
 
 -- --------------------------------------------------------
 
@@ -277,7 +291,7 @@ CREATE TABLE `elections` (
 
 INSERT INTO `elections` (`id`, `name`, `election_type`, `date`, `start`, `end`, `created_at`, `updated_at`) VALUES
 (5, 'Perlament Election 2019', 'Perlament', '2019-12-04', '12:00:00', '13:00:00', '2019-12-01 23:34:56', '2019-12-01 23:34:56'),
-(7, 'City Eleciton 2019', 'City', '2019-12-05', '01:00:00', '02:00:00', '2019-12-01 23:45:43', '2019-12-01 23:45:43'),
+(7, 'City Eleciton 2019', 'City', '2019-12-04', '00:00:00', '02:00:00', '2019-12-01 23:45:43', '2019-12-01 23:45:43'),
 (8, 'Union Election 2019', 'Union', '2019-12-06', '01:00:00', '02:00:00', '2019-12-02 20:44:39', '2019-12-02 20:44:39');
 
 -- --------------------------------------------------------
@@ -810,13 +824,13 @@ ALTER TABLE `birth_certificates`
 -- AUTO_INCREMENT for table `candidates`
 --
 ALTER TABLE `candidates`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `candidate_requests`
 --
 ALTER TABLE `candidate_requests`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `constituencies`

@@ -15,6 +15,7 @@ use App\SubAdmin;
 use App\CandidateRequest;
 use App\Position;
 use App\Election;
+use App\Candidate;
 
 class CandidateController extends Controller
 {
@@ -25,8 +26,9 @@ class CandidateController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:admin',['only' => ['index']]);
         $this->middleware('auth:web',['only' => ['apply','store']]);
+        $this->middleware('auth:admin',['only' => ['index','requestListforAdmin','requestApprovalByEc']]);
+        $this->middleware('auth:subAdmin',['only' => ['requestList','requestApproval']]);
     }
     /**
      * Display a listing of the resource.
@@ -53,9 +55,95 @@ class CandidateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function requestList(Request $request)
     {
-        //
+        $candidateRequest = CandidateRequest::with(['election','electionDetail'])->where('subadmin_id', auth()->user()->id)->get();
+
+        foreach($candidateRequest as $i=>$value){
+            $details = $value->electionDetail;
+                $zone = unserialize($details->zone);
+                if($details->zone_type == 'constituencies'){
+                    $details->zone = Constituencies::find($value->constituencies_id)->name;
+                }
+                elseif($details->zone_type == 'rmo'){
+                    $details->zone = Rmo::find($value->rmo_id)->name;
+                }
+                elseif($details->zone_type == 'ward'){
+                    $details->zone = Rmo::find($value->rmo_id)->name .' > '. Union::find($value->union_id)->name;
+                }
+                elseif($details->zone_type == 'union'){
+                    $union = Union::with(['division', 'district','upazilla', 'rmo'])->find($value->union_id);
+                    $details->zone = $union->division->name .' > '. $union->district->name .' > '. $union->upazilla->name .' > '. $union->name;
+                }
+            
+        }
+        
+        return view('political_party.candidate.requestList', compact('candidateRequest'));
+    }
+
+
+    
+    public function requestListforAdmin(Request $request)
+    {
+        $candidateRequest = CandidateRequest::with(['election','electionDetail'])->where('approved_by_party', 1)->get();
+
+        foreach($candidateRequest as $i=>$value){
+            $details = $value->electionDetail;
+                $zone = unserialize($details->zone);
+                if($details->zone_type == 'constituencies'){
+                    $details->zone = Constituencies::find($value->constituencies_id)->name;
+                }
+                elseif($details->zone_type == 'rmo'){
+                    $details->zone = Rmo::find($value->rmo_id)->name;
+                }
+                elseif($details->zone_type == 'ward'){
+                    $details->zone = Rmo::find($value->rmo_id)->name .' > '. Union::find($value->union_id)->name;
+                }
+                elseif($details->zone_type == 'union'){
+                    $union = Union::with(['division', 'district','upazilla', 'rmo'])->find($value->union_id);
+                    $details->zone = $union->division->name .' > '. $union->district->name .' > '. $union->upazilla->name .' > '. $union->name;
+                }
+            
+        }
+        
+        return view('admin.candidate.requestList', compact('candidateRequest'));
+    }
+
+
+
+
+    public function requestApprovalByEc(Request $request,$id){
+        $candidateRequest = CandidateRequest::find($id);
+        $candidateRequest->approved_by_ec = 1;
+        $candidateRequest->save();
+
+        $candidate = new Candidate;
+        $candidate->fullname = $candidateRequest->fullname;
+        $candidate->user_id = $candidateRequest->user_id;
+        $candidate->election_id = $candidateRequest->election_id;
+        $candidate->election_type = $candidateRequest->election_type;
+        $candidate->election_detail = $candidateRequest->election_detail;
+        $candidate->position_id = $candidateRequest->position_id;
+        $candidate->position_name = $candidateRequest->position_name;
+        $candidate->subadmin_id = $candidateRequest->subadmin_id;
+        $candidate->division_id = $candidateRequest->division_id;
+        $candidate->district_id = $candidateRequest->district_id;
+        $candidate->upazilla_id = $candidateRequest->upazilla_id;
+        $candidate->union_id = $candidateRequest->union_id;
+        $candidate->rmo_id = $candidateRequest->rmo_id;
+        $candidate->constituencies_id = $candidateRequest->constituencies_id;
+        $candidate->save();
+
+
+        return redirect()->back()->with('success', 'successfully approved candidate');
+    }
+
+
+    public function requestApproval(Request $request,$id){
+        $candidate = CandidateRequest::find($id);
+        $candidate->approved_by_party = 1;
+        $candidate->save();
+        return redirect()->back()->with('success', 'successfully approved candidate');
     }
 
     public function apply(Request $request)
@@ -71,27 +159,24 @@ class CandidateController extends Controller
 
         foreach($eletions as $i=>$eletion){
             foreach($eletion->details as $key=>$details){
+                $zone = unserialize($details->zone);
                 if($details->zone_type == 'constituencies'){
-                    $zone = unserialize($details->zone);
                     if(!in_array(auth()->user()->constituencies_id, $zone)){
                         unset($eletion->details[$key]);
                     }
                 }
                 elseif($details->zone_type == 'rmo'){
-                    $zone = unserialize($details->zone);
                     if(!in_array(auth()->user()->rmo_id, $zone)){
                         unset($eletion->details[$key]);
                     }
                 }
                 elseif($details->zone_type == 'ward' ){
-                    $zone = unserialize($details->zone);
                     if(!in_array(auth()->user()->union_id, $zone)){
                         unset($eletion->details[$key]);
                     }
                 }
                 elseif($details->zone_type == 'union'){
                     if( Rmo::find( auth()->user()->rmo_id )->type  != 'polli' ){
-                        $zone = unserialize($details->zone);
                         if(!in_array(auth()->user()->union_id, $zone)){
                             unset($eletion->details[$key]);
                         }
@@ -193,6 +278,8 @@ class CandidateController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $candidate = CandidateRequest::find($id);
+        $candidate->delete();
+        return redirect()->back()->with('success', 'successfully deleted candidate request');
     }
 }

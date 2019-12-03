@@ -37,7 +37,7 @@ class VoteController extends Controller
             'details', 
             'details.candidates', 
             'details.candidates.party'
-        ])->where('date', '>', date('Y-m-d') )->get();
+        ])->where('date', '=', date('Y-m-d') )->get();
 
         foreach($eletions as $i=>$eletion){
             foreach($eletion->details as $key=>$details){

@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.admin')
 @section('admin-content')
 <table class="table table-bordered">
         <thead>

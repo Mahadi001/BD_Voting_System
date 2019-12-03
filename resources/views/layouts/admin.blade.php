@@ -25,7 +25,7 @@
                 </div>
             </div>
 
-            <a href="{{ route('candidate.index') }}" class="list-group-item list-group-item-action bg-light">Candidate Approval</a>
+            <a href="{{ route('admin.candidate.request.list') }}" class="list-group-item list-group-item-action bg-light">Requested Candidate</a>
             <a href="{{ route('correction.index') }}" class="list-group-item list-group-item-action bg-light">Correction Application</a>
  
         </div>

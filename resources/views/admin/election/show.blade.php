@@ -1,18 +1,10 @@
-@extends('layouts.dashboard')
+@extends('layouts.admin')
 @section('admin-content')
 <div class="container">
       <div class="py-5 text-center">
-        <h2>Election Create Form</h2>
+        <h2>Election</h2>
         <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
       </div>
-
-{{-- 
-                  
-      <div class="col-md-4 mb-3">
-        {{Form::label('fname', 'First Name')}}
-        {{Form::text('fname', $certificate->fname, ['class' => 'form-control', 'placeholder' => 'First Name'])}}
-        </div> --}}
-
 
       <div class="row">
         <div class="col-md-12 order-md-1"> 
@@ -52,7 +44,6 @@
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Position Name</th>
-                <th scope="col">Zone Type</th>
                 <th scope="col">Zone</th>
               </tr>
             </thead>
@@ -62,8 +53,7 @@
               <tr>
                 <th scope="row">1</th>
                 <td>{{$details->position_name}}</td>
-                <td>{{ $details->zone_type}}</td>
-                <td>{{ $details->zone}}</td>
+                <td>{{ collect($details->zone)->implode(', ') }}</td>
               </tr>
               @endforeach
             </tbody>

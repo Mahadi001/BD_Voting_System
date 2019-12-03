@@ -17,7 +17,7 @@
 
                                 @if($eletion->start > date('H:i:s'))
                                     <div class="alert alert-danger" role="alert">
-                                        voted will be start: {{ date("h:i a", strtotime($eletion->start)) }}
+                                        vote will be start: {{ date("h:i a", strtotime($eletion->start)) }}
                                     </div>
                                 @else
                                     @foreach($detail->candidates as $candidate)

@@ -45,8 +45,20 @@ Route::get('/vote', 'VoteController@voteList')->name('vote.list')->middleware('a
 Route::post('/vote', 'VoteController@votePlace')->name('vote.place')->middleware('auth:web');
 
 
-Route::resource('candidate', 'CandidateController');
-Route::get('/candidate_apply', 'CandidateController@apply')->name('user.apply')->middleware('auth:web');
+//Route::resource('candidate', 'CandidateController');
+Route::get('/admin/candidate/request/list', 'CandidateController@requestListforAdmin')->name('admin.candidate.request.list');
+Route::get('/admin/candidate/request/approval/{id}', 'CandidateController@requestApprovalByEc')->name('admin.candidate.request.approval');
+Route::delete('/admin/candidate/request/{id}', 'CandidateController@destroy')->name('admin.candidate.destroy');
+
+Route::post('/candidate', 'CandidateController@store')->name('candidate.store')->middleware('auth:web');
+Route::get('/candidate_apply', 'CandidateController@apply')->name('candidate.apply')->middleware('auth:web');
+
+Route::get('/political_party/candidate/request/list', 'CandidateController@requestList')->name('candidate.request.list');
+Route::get('/political_party/candidate/request/approval/{id}', 'CandidateController@requestApproval')->name('candidate.request.approval');
+Route::delete('/political_party/candidate/request/{id}', 'CandidateController@destroy')->name('candidate.destroy');
+
+
+
 
 Route::get('/home', 'HomeController@index')->name('user');
 Route::get('/', 'PagesController@index')->name('home');
@@ -70,21 +82,17 @@ Route::prefix('political_party')->group(function(){
     Route::get('/logout', 'Auth\SubAdminLoginController@logout')->name('political_party.logout');
 });
 
-Route::get('/address', 'AjaxController@division')->name('division');
-
-Route::get('/district', 'AjaxController@district')->name('division_to_district');
-
-Route::get('/upazila', 'AjaxController@upazilla')->name('district_to_upazilla');
-
-Route::get('/rmo', 'AjaxController@union')->name('division_district_upazilla_rmo_to_union');
-
 
 Route::get('/admin/election', 'ElectionController@index')->name('election.index');
 Route::get('/admin/election/create', 'ElectionController@create')->name('election.create');
 Route::post('/admin/election', 'ElectionController@store')->name('election.store');
-Route::get('/admin/election/show/{id}', 'ElectionController@show')->name('election.show');
+Route::get('/admin/election/{id}', 'ElectionController@show')->name('election.show');
 
 
+Route::get('/address', 'AjaxController@division')->name('division');
+Route::get('/district', 'AjaxController@district')->name('division_to_district');
+Route::get('/upazila', 'AjaxController@upazilla')->name('district_to_upazilla');
+Route::get('/rmo', 'AjaxController@union')->name('division_district_upazilla_rmo_to_union');
 Route::get('/election_type_to_position', 'AjaxController@election_type_to_position')->name('election_type_to_position');
 Route::get('/election_to_position', 'AjaxController@election_to_position')->name('election_to_position');
 Route::get('/city_to_ward', 'AjaxController@city_to_ward')->name('city_to_ward');

@@ -25,7 +25,7 @@ class SubAdminController extends Controller
 
     public function index()
     {
-        return view('political_party.candidateApprove');
+        return view('layouts.political_party');
     }    
 
 }
