@@ -155,7 +155,7 @@
           </select>
       </div>
      
-      <input type="hidden" name="constituencies_id" value="" id="constituencies"/>
+    <input type="hidden" name="constituencies_id" value="{{$certificate->constituencies_id}}" id="constituencies"/>
 
       <hr class="mb-4">
       {{Form::submit('Submit', ['class' => 'btn btn-primary col-md-2 col-xs-2 col1 center-block'])}}

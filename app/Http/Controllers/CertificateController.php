@@ -184,7 +184,7 @@ class CertificateController extends Controller
 
         $certificate->save();
 
-        $user = User::where('bid',$correction->bid)->first();
+        $user = User::where('bid',$certificate->bid)->first();
         if($user){
             $user->division_id = $request->division;
             $user->district_id = $request->district;
