@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.page')
 @section('content')
     
   <!-- Page Content -->
@@ -9,7 +9,8 @@
           <div class="col-lg-12">
     
             <div class="card mt-4">
-              <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
+
+                <iframe width="100%" height="480" src="https://www.youtube.com/embed/haRo8uLQNok?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               <div class="card-body">
                 <h3 class="card-title">How to vote</h3>
                 <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente dicta fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam sequi pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>

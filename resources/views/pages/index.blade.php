@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.page')
 @section('content')
     <!-- Jumbotron Header -->
     <div class="container">
