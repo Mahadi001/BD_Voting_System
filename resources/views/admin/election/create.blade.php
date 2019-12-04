@@ -7,6 +7,9 @@
       </div>
 
       <div class="row">
+
+          <div class="col-md-12" id="errorBag"></div>
+
         <div class="col-md-12 order-md-1">
         {!! Form::open(['action' => 'CandidateController@store', 'method' => 'POST']) !!} 
         
@@ -102,7 +105,6 @@
                     
                 });
             });
-
             $("body").on("click", "#city", function () {
 				var rmo = $(this).val();
 				
@@ -116,8 +118,6 @@
                     
                 });
             });
-
-
             $("#election_type").change( function () {
                 var election_type = $(this).val();
                 $.ajax({
@@ -146,7 +146,6 @@
                 });
             });
 
-
             var storeData = []; 
             $("#add").click( function () {
                 var election_type = $("#election_type").val();
@@ -174,12 +173,21 @@
                     url: "{{route('election.store')}}",
                     data: { name: name, election_type: election_type, date: date, start: start, end: end, details: storeData, _token: '{{ csrf_token() }}' },
                     beforeSend: function() {
-                        
+                        $('#errorBag').html('');
                     }
                 }).done(function (data) {
                     console.log(data);
                     alert('success');
                     location.reload();
+                }).fail(function(data) {
+                    console.log( data.responseJSON.errors );
+
+                    var errorBag = '';
+                    $.each( data.responseJSON.errors, function( key, value ) {
+                        errorBag += '<div class="alert alert-danger">'+value[0]+'</div>';
+                    });
+                    $('#errorBag').html(errorBag);
+
                 });
 
             });

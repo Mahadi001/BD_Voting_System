@@ -51,6 +51,15 @@ class ElectionController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'name' => 'required|string',
+            'election_type' => 'required|string',
+            'date' => 'required|date',
+            'start' => 'required',
+            'end' => 'required',
+            'details' => 'required|array'
+        ]);
+
         $election = new Election;
         $election->name = $request->name;
         $election->election_type = $request->election_type;
@@ -86,7 +95,6 @@ class ElectionController extends Controller
     {
         $election = Election::with('details')->find($id);
 
-        
             foreach($election->details as $key=>$details){
                 $zone = unserialize($details->zone);
                 if($details->zone_type == 'constituencies'){

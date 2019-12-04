@@ -61,7 +61,6 @@ class CorrectionController extends Controller
         $certificate->emergencyContact = $correction->emergencyContact;
         $certificate->address = $correction->address;
         $certificate->address2 = $correction->address2;
-        
         $certificate->division_id = $correction->division_id;
         $certificate->district_id = $correction->district_id;
         $certificate->upazilla_id = $correction->upazilla_id;
@@ -71,7 +70,6 @@ class CorrectionController extends Controller
         $certificate->constituencies_id = $correction->constituencies_id;
         $certificate->save();
 
-        
         $user = User::where('bid',$correction->bid)->first();
         $user->division_id = $correction->division_id;
         $user->district_id = $correction->district_id;
@@ -84,10 +82,6 @@ class CorrectionController extends Controller
         $correction->delete();
 
         return redirect( route('correction.index') )->with('success', 'Birth Certificate Correction Approved');
-
-
-
-
     }
 
     public function view()
@@ -98,9 +92,35 @@ class CorrectionController extends Controller
     }
 
     public function apply(Request $request){
-        //return $request->all();
+        
+        $this->validate($request, [
+            'fname' => 'required|string',
+            'mname' => 'required|string',
+            'lname' => 'required|string',
+            'birthPlace' => 'required|string',
+            'birthCountry' => 'required|string',
+            'dateOfBirth' => 'required|date',
+            'fathername' => 'required|string',
+            'mothername' => 'required|string',
+            'height' => 'required|string',
+            'eyesColor' => 'required|string',
+            'sex' => 'required|string',
+            'telephone' => 'required|string',
+            'mobile' => 'required|string',
+            'emergencyContact' => 'required|string',
+            'address' => 'required|string',
+            'address2' => 'required|string',
+            'division' => 'required',
+            "district" => 'required',
+            "upazilla" => 'required',
+            "rmo" => 'required',
+            "municipality" => 'required',
+            "unionORward" => 'required',
+            "constituencies_id" => 'required'
+        ]);
+        
         if(Correction::where('bid', auth()->user()->bid)->count() > 0 ){
-            return redirect()->back()->withError('You have already applyed for correction');
+            return redirect()->back()->withError('You have already applyed for the correction');
         }
         $certificate = new Correction;
         $certificate->bid = auth()->user()->bid;
@@ -154,52 +174,7 @@ class CorrectionController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'bid' => 'required',
-            'fname' => 'required',
-            'mname' => 'required',
-            'lname' => 'required',
-            'birthPlace' => 'required',
-            'birthCountry' => 'required',
-            'dateOfBirth' => 'required',
-            'fathername' => 'required',
-            'mothername' => 'required',
-            'height' => 'required',
-            'eyesColor' => 'required',
-            'sex' => 'required',
-            'telephone' => 'required',
-            'mobile' => 'required',
-            'emergencyContact' => 'required',
-            'address' => 'required',
-            'address2' => 'required',
-            'country' => 'required',
-            'state' => 'required',
-            'zip' => 'required'
-        ]);
-
-        $pending = new Pending;
-        $pending->bid = $request->input('bid');
-        $pending->fname = $request->input('fname');
-        $pending->mname = $request->input('mname');
-        $pending->lname = $request->input('lname');
-        $pending->birthPlace = $request->input('birthPlace');
-        $pending->birthCountry = $request->input('birthCountry');
-        $pending->dateOfBirth = $request->input('dateOfBirth');
-        $pending->fathername = $request->input('fathername');
-        $pending->mothername = $request->input('mothername');
-        $pending->height = $request->input('height');
-        $pending->eyesColor = $request->input('eyesColor');
-        $pending->sex = $request->input('sex');
-        $pending->telephone = $request->input('telephone');
-        $pending->mobile = $request->input('mobile');
-        $pending->emergencyContact = $request->input('emergencyContact');
-        $pending->address = $request->input('address');
-        $pending->address2 = $request->input('address2');
-        $pending->country = $request->input('country');
-        $pending->state = $request->input('state');
-        $pending->zip = $request->input('zip');
-        $pending->save();
-        return redirect('/home')->with('success', 'Update request is sent');
+        //
     }
 
     /**
@@ -218,8 +193,7 @@ class CorrectionController extends Controller
      */
     public function edit($id)
     {
-        $corrections = BirthCertificate::find($id);
-        return view('voter.correction.edit', compact('corrections'));
+        //
     }
 
 
@@ -232,30 +206,7 @@ class CorrectionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $pending = Pending::find($id);
-        $bcert = BirthCertificate::where('bid', $pending->bid)->firstOrFail();
-        $bcert->fname = $pending->fname;
-        $bcert->mname = $pending->mname;
-        $bcert->lname = $pending->lname;
-        $bcert->birthPlace = $pending->birthPlace;
-        $bcert->birthCountry = $pending->birthCountry;
-        $bcert->dateOfBirth = $pending->dateOfBirth;
-        $bcert->fathername = $pending->fathername;
-        $bcert->mothername = $pending->mothername;
-        $bcert->height = $pending->height;
-        $bcert->eyesColor = $pending->eyesColor;
-        $bcert->sex = $pending->sex;
-        $bcert->telephone = $pending->telephone;
-        $bcert->mobile = $pending->mobile;
-        $bcert->emergencyContact = $pending->emergencyContact;
-        $bcert->address = $pending->address;
-        $bcert->address2 = $pending->address2;
-        $bcert->country = $pending->country;
-        $bcert->state = $pending->state;
-        $bcert->zip = $pending->zip;
-        $bcert->save();
-        $pending->delete();
-        return redirect('/correction')->with('success', 'Correction Approved');
+        //
     }
 
     /**
@@ -266,8 +217,6 @@ class CorrectionController extends Controller
      */
     public function destroy($id)
     {
-        $pending = Pending::find($id);
-        $pending->delete();
-        return redirect('/correction')->with('success', 'Request Removed');
+        //
     }
 }

@@ -149,12 +149,11 @@ class CandidateController extends Controller
     public function apply(Request $request)
     {
         $birthCert = BirthCertificate::where('bid', auth()->user()->bid )->first();
-        $parties = ['0'=>'select party'];
+        $parties = [''=>'select party'];
         foreach(SubAdmin::all() as $party){
             $parties[ $party->id  ] = $party->name;
         }
 
-        //return date('Y-m-d');
         $eletions = Election::with('details')->where('date', '>', date('Y-m-d') )->get();
 
         foreach($eletions as $i=>$eletion){
@@ -199,15 +198,15 @@ class CandidateController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request->all();
+        $this->validate($request,[
+            'fullname' => 'required|string',
+            'election' => 'required|integer',
+            'position' => 'required|integer',
+            'election_detail' => 'required|integer',
+            'party' => 'required|integer'
+        ]);
 
-        // $this->validate($request->all(),[
-
-        // ]);
-        $check = CandidateRequest::where([
-            ['election_id',$request->election],
-            ['user_id',auth()->user()->id]
-        ])->count();
+        $check = CandidateRequest::where([['election_id',$request->election],['user_id',auth()->user()->id]])->count();
         if($check>0){
             return redirect()->back()->withError('you\'re already apllyed');
         }

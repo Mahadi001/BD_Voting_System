@@ -23,11 +23,11 @@
 <body>
     <div id="app">
         <nav class="
-    navbar navbar-expand-md shadow-sm 
-    @if(auth()->guard('admin')->check() ) {{'navbar-dark bg-primary'}} 
-    @elseif (auth()->guard('subAdmin')->check() ) {{'navbar-dark bg-success'}} 
-    @else {{'navbar-light'}} 
-    @endif">
+            navbar navbar-expand-md shadow-sm 
+            @if(auth()->guard('admin')->check() ) {{'navbar-dark bg-primary'}} 
+            @elseif (auth()->guard('subAdmin')->check() ) {{'navbar-dark bg-success'}} 
+            @else {{'navbar-light'}} 
+            @endif">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     Online Voting

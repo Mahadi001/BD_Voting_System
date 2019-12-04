@@ -51,24 +51,31 @@ class CertificateController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request->all();
+
         $this->validate($request, [
-            'fname' => 'required',
-            'mname' => 'required',
-            'lname' => 'required',
-            'birthPlace' => 'required',
-            'birthCountry' => 'required',
-            'dateOfBirth' => 'required',
-            'fathername' => 'required',
-            'mothername' => 'required',
-            'height' => 'required',
-            'eyesColor' => 'required',
-            'sex' => 'required',
-            'telephone' => 'required',
-            'mobile' => 'required',
-            'emergencyContact' => 'required',
-            'address' => 'required',
-            'address2' => 'required'
+            'fname' => 'required|string',
+            'mname' => 'required|string',
+            'lname' => 'required|string',
+            'birthPlace' => 'required|string',
+            'birthCountry' => 'required|string',
+            'dateOfBirth' => 'required|date',
+            'fathername' => 'required|string',
+            'mothername' => 'required|string',
+            'height' => 'required|string',
+            'eyesColor' => 'required|string',
+            'sex' => 'required|string',
+            'telephone' => 'required|string',
+            'mobile' => 'required|string',
+            'emergencyContact' => 'required|string',
+            'address' => 'required|string',
+            'address2' => 'required|string',
+            'division' => 'required',
+            "district" => 'required',
+            "upazilla" => 'required',
+            "rmo" => 'required',
+            "municipality" => 'required',
+            "unionORward" => 'required',
+            "constituencies_id" => 'required'
         ]);
 
         $certificate = new BirthCertificate;
@@ -136,26 +143,32 @@ class CertificateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //return $request->all();
         $this->validate($request, [
-            'fname' => 'required',
-            'mname' => 'required',
-            'lname' => 'required',
-            'birthPlace' => 'required',
-            'birthCountry' => 'required',
-            'dateOfBirth' => 'required',
-            'fathername' => 'required',
-            'mothername' => 'required',
-            'height' => 'required',
-            'eyesColor' => 'required',
-            'sex' => 'required',
-            'telephone' => 'required',
-            'mobile' => 'required',
-            'emergencyContact' => 'required',
-            'address' => 'required',
-            'address2' => 'required'
+            'fname' => 'required|string',
+            'mname' => 'required|string',
+            'lname' => 'required|string',
+            'birthPlace' => 'required|string',
+            'birthCountry' => 'required|string',
+            'dateOfBirth' => 'required|date',
+            'fathername' => 'required|string',
+            'mothername' => 'required|string',
+            'height' => 'required|string',
+            'eyesColor' => 'required|string',
+            'sex' => 'required|string',
+            'telephone' => 'required|string',
+            'mobile' => 'required|string',
+            'emergencyContact' => 'required|string',
+            'address' => 'required|string',
+            'address2' => 'required|string',
+            'division' => 'required',
+            "district" => 'required',
+            "upazilla" => 'required',
+            "rmo" => 'required',
+            "municipality" => 'required',
+            "unionORward" => 'required',
+            "constituencies_id" => 'required'
         ]);
-
+        
         $certificate = BirthCertificate::find($id);
         $certificate->fname = $request->input('fname');
         $certificate->mname = $request->input('mname');

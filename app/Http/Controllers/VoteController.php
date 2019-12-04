@@ -78,7 +78,14 @@ class VoteController extends Controller
     }
 
     public function votePlace(Request $request){
-        
+        $this->validate($request,[
+            'candidate' => 'required|integer',
+            'election' => 'required|integer',
+            'position_id' => 'required|integer',
+            'election_detail' => 'required|integer',
+            'subadmin_id' => 'required|integer'
+        ]);
+
         $vote = new Vote;
         $vote->user_id = auth()->user()->id;
         $vote->candidate_id = $request->candidate;
@@ -129,9 +136,7 @@ class VoteController extends Controller
      */
     public function show($id)
     {
-        $corrections = BirthCertificate::where('bid', auth()->user()->bid )->first();
-        // $view = BirthCertificate::find($id);
-        return view('voter.candidates', compact('corrections'));
+        //
     }
 
     /**
