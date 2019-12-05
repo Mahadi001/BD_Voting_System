@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 03, 2019 at 06:29 PM
+-- Generation Time: Dec 05, 2019 at 06:22 AM
 -- Server version: 8.0.18-0ubuntu0.19.10.1
 -- PHP Version: 7.3.11-0ubuntu0.19.10.1
 
@@ -83,15 +83,6 @@ CREATE TABLE `birth_certificates` (
   `constituencies_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `birth_certificates`
---
-
-INSERT INTO `birth_certificates` (`id`, `bid`, `fname`, `mname`, `lname`, `birthPlace`, `birthCountry`, `dateOfBirth`, `fathername`, `mothername`, `height`, `eyesColor`, `sex`, `telephone`, `mobile`, `emergencyContact`, `address`, `address2`, `created_at`, `updated_at`, `division_id`, `district_id`, `upazilla_id`, `union_id`, `rmo_id`, `rmo_type`, `constituencies_id`) VALUES
-(8, 435837787, 'test', 'testm', 'testb', 'sdfsfdf', 'sfsf', '2000-12-01', 'sdfsdf', 'dfsdf', 343, 'sdfsf', 'male', 234, 34234, 342423, 'sdfd', 'sfsdfdf', '2019-12-03 09:07:39', '2019-12-03 14:44:00', 3, 1, 1, 1, 1, 'city', 1),
-(9, 479992748, 'test 2', 'sdfs', 'dfsdf', 'sdf', 'sdf', '2019-12-01', 'sdfsdf', 'sdfsdf', 343, 'sdfdf', 'sdfdf', 34534, 53454, 35345, 'ddfsdf', 'sdffs', '2019-12-03 12:14:35', '2019-12-03 12:14:35', 3, 1, 1, 1, 1, 'city', 1),
-(10, 144831432, 'test 3', 'sdf', 'dfgh', 'hjghj', 'ghjghj', '2019-11-12', 'xcgj', 'ghjg', 565, 'fghfh', 'fh', 456456, 456456, 6556, 'fhfgh', 'fghfgh', '2019-12-03 12:19:57', '2019-12-03 12:19:57', 3, 1, 2, 3, 4, 'polli', 2);
-
 -- --------------------------------------------------------
 
 --
@@ -117,13 +108,6 @@ CREATE TABLE `candidates` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `candidates`
---
-
-INSERT INTO `candidates` (`id`, `fullname`, `user_id`, `election_id`, `election_type`, `election_detail`, `position_id`, `position_name`, `subadmin_id`, `division_id`, `district_id`, `upazilla_id`, `union_id`, `rmo_id`, `constituencies_id`, `created_at`, `updated_at`) VALUES
-(3, 'test testm testb', '15', '7', 'City', 5, 2, 'Mayor', 1, 3, 1, 1, 1, 1, 1, '2019-12-03 18:23:01', '2019-12-03 18:23:01');
 
 -- --------------------------------------------------------
 
@@ -152,13 +136,6 @@ CREATE TABLE `candidate_requests` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `candidate_requests`
---
-
-INSERT INTO `candidate_requests` (`id`, `fullname`, `user_id`, `election_id`, `election_type`, `election_detail`, `position_id`, `position_name`, `subadmin_id`, `division_id`, `district_id`, `upazilla_id`, `union_id`, `rmo_id`, `constituencies_id`, `approved_by_party`, `approved_by_ec`, `created_at`, `updated_at`) VALUES
-(5, 'test testm testb', '15', '7', 'City', 5, 2, 'Mayor', 1, 3, 1, 1, 1, 1, 1, 1, 1, '2019-12-03 17:56:31', '2019-12-03 18:23:01');
 
 -- --------------------------------------------------------
 
@@ -285,15 +262,6 @@ CREATE TABLE `elections` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `elections`
---
-
-INSERT INTO `elections` (`id`, `name`, `election_type`, `date`, `start`, `end`, `created_at`, `updated_at`) VALUES
-(5, 'Perlament Election 2019', 'Perlament', '2019-12-04', '12:00:00', '13:00:00', '2019-12-01 23:34:56', '2019-12-01 23:34:56'),
-(7, 'City Eleciton 2019', 'City', '2019-12-04', '00:00:00', '02:00:00', '2019-12-01 23:45:43', '2019-12-01 23:45:43'),
-(8, 'Union Election 2019', 'Union', '2019-12-06', '01:00:00', '02:00:00', '2019-12-02 20:44:39', '2019-12-02 20:44:39');
-
 -- --------------------------------------------------------
 
 --
@@ -310,16 +278,6 @@ CREATE TABLE `election_details` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `election_details`
---
-
-INSERT INTO `election_details` (`id`, `election_id`, `position`, `position_name`, `zone_type`, `zone`, `created_at`, `updated_at`) VALUES
-(4, 5, 1, 'Member of Parliament(MP)', 'constituencies', 'a:2:{i:0;s:1:\"2\";i:1;s:1:\"3\";}', '2019-12-01 23:34:56', '2019-12-01 23:34:56'),
-(5, 7, 2, 'Mayor', 'rmo', 'a:1:{i:0;s:1:\"1\";}', '2019-12-01 23:45:43', '2019-12-01 23:45:43'),
-(6, 7, 3, 'Commissioner ', 'ward', 'a:2:{i:0;s:1:\"1\";i:1;s:1:\"2\";}', '2019-12-01 23:45:43', '2019-12-01 23:45:43'),
-(7, 8, 4, 'Chairman', 'union', 'a:2:{i:0;s:1:\"3\";i:1;s:1:\"4\";}', '2019-12-02 20:44:39', '2019-12-02 20:44:39');
 
 -- --------------------------------------------------------
 
@@ -537,7 +495,8 @@ CREATE TABLE `sub_admins` (
 --
 
 INSERT INTO `sub_admins` (`id`, `name`, `email`, `email_verified_at`, `job_title`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Awami League', 'awamileague@mail.com', NULL, 'Political Party', '$2y$10$2eMdnYwxelOSFHLYbFiFhOQMvgCSBNWR6Tr14vXp1zDXilvfsZkfa', NULL, NULL, NULL);
+(1, 'Awami League', 'awamileague@mail.com', NULL, 'Political Party', '$2y$10$2eMdnYwxelOSFHLYbFiFhOQMvgCSBNWR6Tr14vXp1zDXilvfsZkfa', NULL, NULL, NULL),
+(3, 'BNP', 'bnp@mail.com', NULL, 'Political Party', '$2y$10$2eMdnYwxelOSFHLYbFiFhOQMvgCSBNWR6Tr14vXp1zDXilvfsZkfa', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -623,6 +582,7 @@ CREATE TABLE `users` (
   `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `telephone` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `otp_pin` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -633,13 +593,6 @@ CREATE TABLE `users` (
   `rmo_id` int(10) NOT NULL DEFAULT '0',
   `constituencies_id` int(10) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `bid`, `nid`, `name`, `telephone`, `password`, `remember_token`, `created_at`, `updated_at`, `division_id`, `district_id`, `upazilla_id`, `union_id`, `rmo_id`, `constituencies_id`) VALUES
-(15, 435837787, '3873391582', 'sdfsdf', '34534543', '$2y$10$nf31qRqIA3t8ShbXh7rWuuAW4vdUYbbRwYWc3Ew3Bd8CNbuR0N3k.', NULL, '2019-12-03 13:19:59', '2019-12-03 14:44:00', 3, 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -818,19 +771,19 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `birth_certificates`
 --
 ALTER TABLE `birth_certificates`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `candidates`
 --
 ALTER TABLE `candidates`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `candidate_requests`
 --
 ALTER TABLE `candidate_requests`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `constituencies`
@@ -842,7 +795,7 @@ ALTER TABLE `constituencies`
 -- AUTO_INCREMENT for table `corrections`
 --
 ALTER TABLE `corrections`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `districts`
@@ -860,13 +813,13 @@ ALTER TABLE `divisions`
 -- AUTO_INCREMENT for table `elections`
 --
 ALTER TABLE `elections`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `election_details`
 --
 ALTER TABLE `election_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `election_types`
@@ -914,7 +867,7 @@ ALTER TABLE `rmos`
 -- AUTO_INCREMENT for table `sub_admins`
 --
 ALTER TABLE `sub_admins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `unions`
@@ -932,13 +885,13 @@ ALTER TABLE `upazillas`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `votes`
 --
 ALTER TABLE `votes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -27,9 +27,8 @@ class CheckBidForRegister implements Rule
     public function passes($attribute, $value)
     {
         $certificate = BirthCertificate::where('bid',$value)->first();
-        $dateDiff = date_diff(  date_create($certificate->dateOfBirth), date_create(date('Y-m-d'))  );
-        
         if($certificate){
+            $dateDiff = date_diff(  date_create($certificate->dateOfBirth), date_create(date('Y-m-d'))  );
             if($dateDiff->format("%y") >= 18){
                 return true;
             }

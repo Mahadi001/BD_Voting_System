@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\BirthCertificate;
 use App\Rules\CheckBidForRegister;
+use Auth;
 
 class RegisterController extends Controller
 {
@@ -30,7 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -54,7 +55,6 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'bid' => ['required', 'integer', 'unique:users,bid', new CheckBidForRegister],
             'telephone' => ['required', 'string', 'max:30', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
@@ -66,13 +66,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $pin = rand(1000,9999);
         $certificate = BirthCertificate::where('bid',$data['bid'])->first();
-        return User::create([
+        return $user = User::create([
             'name' => $data['name'],
             'bid' => $data['bid'],
             'nid' => rand(1111111111, 9999999999),
+            'otp_pin' => $pin,
             'telephone' => $data['telephone'],
-            'password' => Hash::make($data['password']),
+            'password' => Hash::make('1234'),
             'division_id' => $certificate->division_id,
             'district_id' => $certificate->district_id,
             'upazilla_id' => $certificate->upazilla_id,
@@ -81,6 +83,5 @@ class RegisterController extends Controller
             'constituencies_id' => $certificate->constituencies_id,
         ]);
     }
-
 
 }

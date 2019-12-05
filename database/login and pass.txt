@@ -7,5 +7,6 @@ user mail - test@mail.com
 password - 12345678
 
 sub admin login
+http://localhost:8000/political_party/login
 sub admin mail - awamileague@mail.com
 password - 12345678

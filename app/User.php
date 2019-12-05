@@ -27,6 +27,7 @@ class User extends Authenticatable
         'upazilla_id', 
         'union_id','rmo_id',
         'constituencies_id',
+        'otp_pin',
     ];
 
     /**

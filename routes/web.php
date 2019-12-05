@@ -16,6 +16,9 @@
 // });
 
 Auth::routes();
+Route::post('/otp_send', 'Auth\LoginController@otpSend')->name('otp.send');
+Route::get('/otp_verify', 'Auth\LoginController@otpVerifyForm')->name('otp.verify');
+
 
 //Route::resource('certificate', 'CertificateController');
 Route::get('/admin/certificate', 'CertificateController@index')->name('certificate.index');
